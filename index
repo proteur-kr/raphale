@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 깃허브 페이지</title>
+    <title>Welcome to Proteur</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>환영합니다!</h1>
-    <p>이것은 GitHub Pages로 만든 무료 홈페이지입니다.</p>
+    <img src="re640x480proteur_family_2.png" alt="Welcome Image">
 </body>
 </html>
