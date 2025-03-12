@@ -3,26 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proteur 홈페이지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            color: #333;
-        }
-        img {
-            width: 300px; /* 이미지 크기 조절 */
-            border-radius: 10px;
-        }
-    </style>
+    <title>Proteur</title>
 </head>
 <body>
-    <h1>Proteur 홈페이지</h1>
-    <p>환영합니다! 아래 이미지를 확인하세요.</p>
-    <img src="RE640X480Proteur_family_2.png" alt="Proteur Family">
+    <h1>Raphale</h1>
+    <img src="RE640X480Proteur_family_2.png" alt="Proteur Family Image">
 </body>
 </html>
