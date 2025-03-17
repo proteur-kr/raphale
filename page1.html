@@ -11,77 +11,69 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       text-align: center;
-      position: relative;
-      transition: opacity 0.5s ease-in-out;
+      position: relative; /* Go Back 링크 위치 조정을 위해 */
     }
-    /* 버튼 이미지 스타일 */
-    .image-button {
-      width: 100px;
-      height: auto;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+    
+    /* 페이지 내용 스타일 (예시) */
+    h1 {
       margin-bottom: 20px;
-      margin-top: -600px;
     }
+    
+    p {
+      font-size: 16px;
+      color: #333;
+      max-width: 80%;
+      margin: 0 20px;
+    }
+    
     /* "Go Back" 링크 스타일 */
     .go-back {
       position: absolute;
-      bottom: 150px;
+      bottom: 30px;
       text-decoration: none;
       font-size: 16px;
       color: #333;
     }
+    
     .go-back:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-
-  <!-- 버튼 이미지 -->
-  <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
+  <!-- 페이지 콘텐츠 예시 -->
+  <h1>Page 1 Content</h1>
+  <p>
+    This is the content of Page 1. You can put any content you want here.
+  </p>
   
   <!-- "Go Back" 링크 -->
   <a href="index.html" class="go-back" id="goBackLink">Go Back</a>
-
+  
   <script>
-    // 페이드 아웃 후 지정 URL로 이동하는 함수
-    function fadeOutAndRedirect(url) {
-      document.body.style.opacity = '0';
-      setTimeout(function() {
-        window.location.href = url;
-      }, 500);
+    // 이동 함수: index.html로 단순 이동
+    function goBack() {
+      window.location.href = "index.html";
     }
-
-    // 페이지 로드 후 버튼 이미지 페이드 인 효과
-    window.onload = function() {
-      setTimeout(function() {
-        const button1 = document.getElementById("button1");
-        if (button1) {
-          button1.style.opacity = 1;
-        }
-      }, 500);
-    };
-
-    // 히스토리에 현재 상태를 추가하여 popstate 이벤트를 활성화
+    
+    // 현재 상태를 히스토리에 추가 (popstate 이벤트 활성화용)
     window.history.pushState(null, null, location.href);
-
-    // 크롬 브라우저의 뒤로가기 버튼(또는 popstate 이벤트) 발생 시 index.html로 이동
-    window.onpopstate = function() {
-      fadeOutAndRedirect("index.html");
+    
+    // 브라우저 뒤로가기 버튼(또는 popstate 이벤트)이 발생하면 index.html로 이동
+    window.onpopstate = function(event) {
+      goBack();
     };
-
-    // 백스페이스 키를 눌렀을 때도 index.html로 이동 (PC)
+    
+    // 키보드 백스페이스 키를 누르면 index.html로 이동 (PC 환경)
     window.addEventListener("keydown", function(event) {
       if (event.key === "Backspace") {
-        event.preventDefault();
-        fadeOutAndRedirect("index.html");
+        event.preventDefault(); // 기본 백스페이스 동작 방지 (예: 이전 페이지 이동)
+        goBack();
       }
     });
   </script>
-
 </body>
 </html>
