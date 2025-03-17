@@ -5,21 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page 1</title>
     <style>
+        /* 전체 body 스타일 */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
         /* 버튼 이미지 스타일 */
         .image-button {
             width: 100px;
             height: auto;
             opacity: 0; /* 초기 상태에서 투명하게 설정 */
             transition: opacity 1s ease-in-out; /* 1초 동안 투명도를 변화 */
+            margin-bottom: 20px; /* 버튼 이미지 아래쪽 여백 */
+        }
+
+        /* "Go Back" 링크 스타일 */
+        .go-back {
+            margin-top: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .go-back:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <h1>Page 1 - Button 1 FadeIn</h1>
-
     <!-- 버튼 이미지 -->
     <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
+
+    <!-- "Go Back" 링크 -->
+    <a href="index.html" class="go-back">Go Back</a>
 
     <script>
         // 페이지 로드 후 버튼 이미지 페이드인 효과
