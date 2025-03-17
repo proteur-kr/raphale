@@ -33,6 +33,8 @@
             font-weight: bold;
             color: #333;
             margin-top: 20px; /* 이미지와 텍스트 간격 */
+            opacity: 0; /* 초기 상태에서 텍스트는 보이지 않음 */
+            transition: opacity 1s ease-in-out; /* 텍스트도 서서히 보이게 설정 */
         }
 
         /* "Go Back" 링크 스타일 */
@@ -55,7 +57,7 @@
     <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
 
     <!-- "Kang Jun Hyok" 텍스트 -->
-    <div class="name">Kang Jun Hyok</div>
+    <div class="name" id="nameText">Kang Jun Hyok</div>
 
     <!-- "Go Back" 링크 -->
     <a href="index.html" class="go-back" id="goBackLink">Go Back</a>
@@ -67,6 +69,12 @@
                 const button1 = document.getElementById("button1");
                 if (button1) {
                     button1.style.opacity = 1; // 버튼 1을 불투명하게 만들어서 페이드 인 효과
+                }
+
+                // 버튼 이미지 페이드인 완료 후 이름 텍스트를 서서히 보이게 설정
+                const nameText = document.getElementById("nameText");
+                if (nameText) {
+                    nameText.style.opacity = 1; // 텍스트를 불투명하게 만들어서 서서히 나타남
                 }
             }, 500); // 0.5초 후 페이드 인 시작
         };
