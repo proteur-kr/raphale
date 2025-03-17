@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page 1</title>
   <style>
+    /* 전체 body 스타일 */
     body {
       display: flex;
       flex-direction: column;
@@ -16,6 +17,7 @@
       position: relative;
       transition: opacity 0.5s ease-in-out;
     }
+    /* 버튼 이미지 스타일 */
     .image-button {
       width: 100px;
       height: auto;
@@ -24,6 +26,7 @@
       margin-bottom: 20px;
       margin-top: -600px;
     }
+    /* "Go Back" 링크 스타일 */
     .go-back {
       position: absolute;
       bottom: 150px;
@@ -37,14 +40,23 @@
   </style>
 </head>
 <body>
+
   <!-- 버튼 이미지 -->
   <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
   
-  <!-- Go Back 링크 -->
+  <!-- "Go Back" 링크 -->
   <a href="index.html" class="go-back" id="goBackLink">Go Back</a>
 
   <script>
-    // 페이지 로드 후 버튼 이미지 페이드인 효과
+    // 페이드 아웃 후 지정 URL로 이동하는 함수
+    function fadeOutAndRedirect(url) {
+      document.body.style.opacity = '0';
+      setTimeout(function() {
+        window.location.href = url;
+      }, 500);
+    }
+
+    // 페이지 로드 후 버튼 이미지 페이드 인 효과
     window.onload = function() {
       setTimeout(function() {
         const button1 = document.getElementById("button1");
@@ -54,21 +66,22 @@
       }, 500);
     };
 
-    // 히스토리 상태 추가 (뒤로가기 버튼 감지 위해)
+    // 히스토리에 현재 상태를 추가하여 popstate 이벤트를 활성화
     window.history.pushState(null, null, location.href);
 
-    // 뒤로가기 버튼 클릭 시 "Go Back" 링크 자동 클릭
+    // 크롬 브라우저의 뒤로가기 버튼(또는 popstate 이벤트) 발생 시 index.html로 이동
     window.onpopstate = function() {
-      document.getElementById("goBackLink").click();
+      fadeOutAndRedirect("index.html");
     };
 
-    // 백스페이스 키를 눌렀을 때 "Go Back" 링크 클릭
+    // 백스페이스 키를 눌렀을 때도 index.html로 이동 (PC)
     window.addEventListener("keydown", function(event) {
       if (event.key === "Backspace") {
-        event.preventDefault(); // 기본 동작 방지
-        document.getElementById("goBackLink").click();
+        event.preventDefault();
+        fadeOutAndRedirect("index.html");
       }
     });
   </script>
+
 </body>
 </html>
