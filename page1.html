@@ -1,85 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 1</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-
-        .image-button {
-            width: 100px;
-            height: auto;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            margin-bottom: 20px;
-            margin-top: -500px;
-        }
-
-        .go-back {
-            position: absolute;
-            bottom: 30px;
-            text-decoration: none;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .go-back:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page 1</title>
+  <style>
+    body {
+      transition: opacity 0.5s ease-in-out;
+      opacity: 1;
+      /* 기본 배경 및 중앙 정렬 등 추가 스타일 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      position: relative;
+    }
+    .go-back {
+      position: absolute;
+      bottom: 30px;
+      text-decoration: none;
+      font-size: 16px;
+      color: #333;
+    }
+    .go-back:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
+  <h1>Page 1 Content</h1>
+  <p>This is page 1. 여기에 페이지 내용을 추가하세요.</p>
+  <!-- Go Back 링크 (클릭 시 페이드아웃 후 index.html로 이동) -->
+  <a href="index.html" class="go-back" onclick="fadeOutAndRedirect('index.html'); return false;">Go Back</a>
+  
+  <script>
+    // 페이드 아웃 후 지정 URL로 이동하는 함수
+    function fadeOutAndRedirect(url) {
+      document.body.style.opacity = 0;
+      setTimeout(function() {
+        window.location.href = url;
+      }, 500);
+    }
 
-    <!-- 이미지 -->
-    <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
+    // 히스토리 상태 추가 (뒤로가기 버튼 이벤트를 위해)
+    window.history.pushState({}, "");
 
-    <!-- "Go Back" 링크 -->
-    <a href="javascript:void(0);" class="go-back" onclick="goBack()">Go Back</a>
+    // 뒤로가기 버튼을 누르면 index.html로 이동 (페이드 아웃 효과 적용)
+    window.onpopstate = function(event) {
+      fadeOutAndRedirect("index.html");
+    };
 
-    <script>
-        let touchstartX = 0;
-        let touchendX = 0;
-
-        function handleSwipe() {
-            if (touchendX < touchstartX) {
-                goBack();  // 왼쪽으로 스와이프 시 뒤로 가기
-            }
-        }
-
-        window.onload = function() {
-            // 터치 시작 위치 저장
-            window.addEventListener('touchstart', (e) => {
-                touchstartX = e.changedTouches[0].screenX;
-            });
-
-            // 터치 종료 시 위치 확인 후 스와이프 방향에 따른 행동
-            window.addEventListener('touchend', (e) => {
-                touchendX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-
-            // 페이지 로드 후 버튼 이미지 페이드인 효과
-            setTimeout(function() {
-                const button1 = document.getElementById("button1");
-                if (button1) {
-                    button1.style.opacity = 1;
-                }
-            }, 500); // 0.5초 후 페이드 인 시작
-        };
-
-        function goBack() {
-            window.location.href = "index.html";  // index.html로 이동
-        }
-    </script>
-
+    // 모바일 스와이프 제스처 감지 (왼쪽 스와이프 시 뒤로가기)
+    let touchstartX = 0;
+    let touchendX = 0;
+    document.body.addEventListener("touchstart", function(event) {
+      touchstartX = event.changedTouches[0].screenX;
+    }, false);
+    document.body.addEventListener("touchend", function(event) {
+      touchendX = event.changedTouches[0].screenX;
+      // 스와이프 임계값: 시작점에서 30px 이상 왼쪽으로 스와이프하면
+      if (touchendX < touchstartX - 30) {
+        fadeOutAndRedirect("index.html");
+      }
+    }, false);
+  </script>
 </body>
 </html>
