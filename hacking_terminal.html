@@ -85,7 +85,7 @@
             if (key === "Enter") {
                 // 엔터를 누르면 새 줄로 이동
                 if (userInput === "3249") {
-                    // "*********************************"을 입력하면 proteur.html로 이동
+                    // "**************************************************"을 입력하면 proteur.html로 이동
                     window.location.href = "proteur.html";
                 } else {
                     typingText.innerHTML += "<br>>>> "; // 새 입력 대기
@@ -105,7 +105,8 @@
         // 텍스트 업데이트 함수
         function updateText() {
             const initialText = textLines.join("<br>");
-            typingText.innerHTML = initialText + "<br>>>> " + userInput;
+            const maskedInput = "*".repeat(userInput.length); // 입력된 글자를 별표로 마스킹
+            typingText.innerHTML = initialText + "<br>>>> " + maskedInput;
         }
 
         // 타이핑 시작
