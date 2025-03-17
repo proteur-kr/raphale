@@ -25,7 +25,10 @@
         // 페이지 로드 후 버튼 이미지 페이드인 효과
         window.onload = function() {
             setTimeout(function() {
-                document.getElementById("button1").style.opacity = 1; // 버튼 1을 불투명하게 만들어서 페이드 인 효과
+                const button1 = document.getElementById("button1");
+                if (button1) {
+                    button1.style.opacity = 1; // 버튼 1을 불투명하게 만들어서 페이드 인 효과
+                }
             }, 500); // 0.5초 후 페이드 인 시작
         };
     </script>
