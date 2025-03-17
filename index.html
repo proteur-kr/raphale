@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proteur</title>
+    <title>Index Page</title>
     <style>
         /* 전체 body 스타일 */
         body {
@@ -11,10 +11,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
             text-align: center;
-            transition: opacity 0.5s ease-in-out; /* 페이드 효과 */
         }
 
         /* 버튼 컨테이너 */
@@ -22,25 +21,15 @@
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: -10px;
         }
 
-        /* 버튼 스타일 */
+        /* 버튼 이미지 스타일 */
         .image-button {
-            width: 80px;
+            width: 100px;
             height: auto;
             cursor: pointer;
         }
     </style>
-
-    <script>
-        function fadeOutAndRedirect(url) {
-            document.body.style.opacity = '0'; // 페이드 아웃 효과
-            setTimeout(() => {
-                window.location.href = url; // 페이지 이동
-            }, 500); // 0.5초 후 이동
-        }
-    </script>
 </head>
 <body>
 
@@ -62,6 +51,21 @@
         as not just consumers of information but as contributors, <br>
         actively expressing their opinions and becoming experts.
     </p>
+
+    <script>
+        // 페이지 처음 로드 시 새로고침
+        if (performance.navigation.type === 1) {
+            // 새로고침이 아닐 경우 새로고침
+            location.reload();
+        }
+
+        function fadeOutAndRedirect(url) {
+            document.body.style.opacity = '0'; // 페이드 아웃 효과
+            setTimeout(() => {
+                window.location.href = url; // 페이지 이동
+            }, 500); // 0.5초 후 이동
+        }
+    </script>
 
 </body>
 </html>
