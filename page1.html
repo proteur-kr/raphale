@@ -59,6 +59,21 @@
                 }
             }, 500); // 0.5초 후 페이드 인 시작
         };
+
+        // 'Go Back' 링크를 클릭하거나 뒤로가기 버튼을 눌렀을 때 index.html로 이동
+        window.onpopstate = function(event) {
+            window.location.href = "index.html";
+        };
+
+        // 뒤로가기를 누르면 강제로 페이지를 이동시켜서 index.html로 이동
+        window.history.pushState({}, "");
+
+        // 백스페이스 키를 눌렀을 때도 뒤로가도록 처리
+        window.addEventListener("keydown", function(event) {
+            if (event.key === "Backspace") {
+                window.location.href = "index.html";
+            }
+        });
     </script>
 
 </body>
