@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page 1</title>
   <style>
-    /* 전체 body 스타일 */
     body {
       display: flex;
       flex-direction: column;
@@ -14,22 +13,19 @@
       min-height: 100vh;
       margin: 0;
       text-align: center;
-      position: relative; /* Go Back 링크 위치 조정을 위해 */
+      position: relative;
+      transition: opacity 0.5s ease-in-out;
     }
-    
-    /* 페이지 내용 스타일 (예시) */
     h1 {
       margin-bottom: 20px;
     }
-    
-    p {
-      font-size: 16px;
-      color: #333;
-      max-width: 80%;
-      margin: 0 20px;
+    /* 콘텐츠 이미지 스타일 (원하는 이미지로 조정 가능) */
+    img.content-image {
+      width: 300px; /* 이미지 크기를 조절 */
+      height: auto;
+      margin-bottom: 20px;
     }
-    
-    /* "Go Back" 링크 스타일 */
+    /* Go Back 링크 스타일 */
     .go-back {
       position: absolute;
       bottom: 30px;
@@ -37,41 +33,33 @@
       font-size: 16px;
       color: #333;
     }
-    
     .go-back:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <!-- 페이지 콘텐츠 예시 -->
   <h1>Page 1 Content</h1>
-  <p>
-    This is the content of Page 1. You can put any content you want here.
-  </p>
-  
-  <!-- "Go Back" 링크 -->
+  <!-- 콘텐츠 이미지: 페이지에 표시할 이미지를 불러옵니다 -->
+  <img class="content-image" src="https://proteur-kr.github.io/raphale/RE640X480Proteur_family_2.png" alt="Page 1 Image">
+  <p>This is page 1. You can put any content you want here.</p>
+  <!-- Go Back 링크: 클릭 시 index.html로 이동 -->
   <a href="index.html" class="go-back" id="goBackLink">Go Back</a>
   
   <script>
-    // 이동 함수: index.html로 단순 이동
-    function goBack() {
-      window.location.href = "index.html";
-    }
-    
-    // 현재 상태를 히스토리에 추가 (popstate 이벤트 활성화용)
+    // 현재 상태를 히스토리에 추가하여 popstate 이벤트를 활성화합니다.
     window.history.pushState(null, null, location.href);
     
-    // 브라우저 뒤로가기 버튼(또는 popstate 이벤트)이 발생하면 index.html로 이동
+    // 브라우저의 뒤로가기 버튼(또는 popstate 이벤트)이 발생하면 index.html로 이동합니다.
     window.onpopstate = function(event) {
-      goBack();
+      window.location.href = "index.html";
     };
     
-    // 키보드 백스페이스 키를 누르면 index.html로 이동 (PC 환경)
+    // 백스페이스 키를 눌렀을 때 기본 동작을 막고 index.html로 이동합니다.
     window.addEventListener("keydown", function(event) {
       if (event.key === "Backspace") {
-        event.preventDefault(); // 기본 백스페이스 동작 방지 (예: 이전 페이지 이동)
-        goBack();
+        event.preventDefault();
+        window.location.href = "index.html";
       }
     });
   </script>
