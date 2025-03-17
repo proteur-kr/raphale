@@ -27,6 +27,14 @@
             margin-top: -600px; /* 위로 올릴 만큼의 간격 조정 */
         }
 
+        /* "Kang Jun Hyok" 텍스트 스타일 */
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px; /* 이미지와 텍스트 간격 */
+        }
+
         /* "Go Back" 링크 스타일 */
         .go-back {
             position: absolute;
@@ -45,6 +53,9 @@
 
     <!-- 버튼 이미지 -->
     <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
+
+    <!-- "Kang Jun Hyok" 텍스트 -->
+    <div class="name">Kang Jun Hyok</div>
 
     <!-- "Go Back" 링크 -->
     <a href="index.html" class="go-back" id="goBackLink">Go Back</a>
@@ -74,6 +85,9 @@
             const goBackLink = document.getElementById("goBackLink");
             goBackLink.click(); // Go Back 링크 클릭
         });
+
+        // history.pushState를 사용하여 popstate 이벤트를 강제로 발생시킴
+        history.pushState(null, "", location.href);
     </script>
 
 </body>
