@@ -44,9 +44,7 @@
             ">>> mainframe.connect()",
             ">>> Downloading data...",
             ">>> backdoor.install()",
-            ">>> security.override()",
-            ">>> trace_block = 45%",
-            ">>> exit_strategy.run()"
+            ">>> security.override()"
         ];
 
         const typingText = document.getElementById("typing-text");
@@ -54,6 +52,9 @@
         let charIndex = 0;
         let userInput = "";
         let isTypingComplete = false;
+        let tracePercentage = 82; // 82%부터 시작
+        let traceInterval;
+        let traceCompleted = false;
 
         // 초기 타이핑 함수
         function type() {
@@ -73,7 +74,29 @@
                 // 초기 타이핑이 끝나면 사용자 입력 모드로 전환
                 isTypingComplete = true;
                 typingText.innerHTML += "<br>>>> "; // 새로운 입력 프롬프트 추가
+                // ">>> trace_block = 82%" 타이핑
+                typingText.innerHTML += "<br>>> trace_block = " + tracePercentage + "%";
+                startTrace(); // 트레이스 진행 시작
             }
+        }
+
+        // 타이핑 중 숫자 올라가는 부분
+        function startTrace() {
+            traceInterval = setInterval(() => {
+                if (tracePercentage < 100 && !userInput) { // 입력값이 없으면 숫자 증가
+                    tracePercentage++;
+                    updateText();
+                }
+                if (tracePercentage >= 100) {
+                    clearInterval(traceInterval); // 100%에 도달하면 증가 멈춤
+                    setTimeout(() => {
+                        typingText.innerHTML = ''; // 화면을 지움
+                        setTimeout(() => {
+                            window.location.href = "index.html"; // 3초 뒤 index.html로 이동
+                        }, 3000);
+                    }, 500); // 100% 도달 후 0.5초 대기
+                }
+            }, 500); // 0.5초마다 1% 증가
         }
 
         // 키보드 입력 처리
@@ -85,7 +108,7 @@
             if (key === "Enter") {
                 // 엔터를 누르면 새 줄로 이동
                 if (userInput === "3249") {
-                    // "**************************************************"을 입력하면 proteur.html로 이동
+                    // "3249"을 입력하면 proteur.html로 이동
                     window.location.href = "proteur.html";
                 } else {
                     typingText.innerHTML += "<br>>>> "; // 새 입력 대기
@@ -99,6 +122,7 @@
                 // 일반 문자 입력
                 userInput += key;
                 updateText();
+                clearInterval(traceInterval); // 사용자가 입력하면 트레이스 멈춤
             }
         });
 
@@ -106,7 +130,7 @@
         function updateText() {
             const initialText = textLines.join("<br>");
             const maskedInput = "*".repeat(userInput.length); // 입력된 글자를 별표로 마스킹
-            typingText.innerHTML = initialText + "<br>>>> " + maskedInput;
+            typingText.innerHTML = initialText + "<br>>> trace_block = " + tracePercentage + "%<br>>>> " + maskedInput;
         }
 
         // 타이핑 시작
