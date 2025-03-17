@@ -60,18 +60,33 @@
             }, 500); // 0.5초 후 페이드 인 시작
         };
 
-        // 뒤로가기 버튼 및 백스페이스 버튼 처리를 위해 히스토리 추가
-        window.history.pushState({}, "");
+        // 페이지 열 때 히스토리 조작
+        window.history.pushState({}, "Page 1", location.href);
 
-        // 뒤로가기를 누르면 index.html로 이동
+        // 뒤로가기 버튼이 눌렸을 때 처리
         window.onpopstate = function(event) {
-            window.location.href = "index.html";
+            window.location.href = "index.html"; // 뒤로가기 시 index.html로 이동
         };
 
-        // 백스페이스 키를 눌렀을 때도 뒤로가도록 처리
+        // 백스페이스 키를 눌렀을 때도 뒤로가도록 처리 (PC)
         window.addEventListener("keydown", function(event) {
             if (event.key === "Backspace") {
                 window.location.href = "index.html";
+            }
+        });
+
+        // 모바일 스와이프 동작으로 뒤로가기 처리
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.body.addEventListener("touchstart", function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        });
+
+        document.body.addEventListener("touchend", function(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            if (touchEndX < touchStartX) {
+                window.location.href = "index.html"; // 왼쪽으로 스와이프하면 뒤로가기
             }
         });
     </script>
