@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 해킹 터미널 - 사용자 입력</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .text {
+            line-height: 1.5;
+        }
+        .blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="text" id="typing-text"></div>
+        <span class="blink" id="cursor">_</span>
+    </div>
+
+    <script>
+        const textLines = [
+            ">>> import hacking_tools",
+            ">>> hacking_tools.init()",
+            ">>> System access granted",
+            ">>> firewall.bypass()",
+            ">>> Encryption decoded",
+            ">>> mainframe.connect()",
+            ">>> Downloading data...",
+            ">>> backdoor.install()",
+            ">>> security.override()",
+            ">>> trace_block = 45%",
+            ">>> exit_strategy.run()"
+        ];
+
+        const typingText = document.getElementById("typing-text");
+        let lineIndex = 0;
+        let charIndex = 0;
+        let userInput = "";
+        let isTypingComplete = false;
+
+        // 초기 타이핑 함수
+        function type() {
+            if (lineIndex < textLines.length) {
+                if (charIndex < textLines[lineIndex].length) {
+                    typingText.innerHTML = textLines.slice(0, lineIndex).join("<br>") + 
+                        (lineIndex > 0 ? "<br>" : "") + 
+                        textLines[lineIndex].slice(0, charIndex + 1);
+                    charIndex++;
+                    setTimeout(type, 3); // 타이핑 속도 조절
+                } else {
+                    charIndex = 0;
+                    lineIndex++;
+                    setTimeout(type, 3);
+                }
+            } else {
+                // 초기 타이핑이 끝나면 사용자 입력 모드로 전환
+                isTypingComplete = true;
+                typingText.innerHTML += "<br>>>> "; // 새로운 입력 프롬프트 추가
+            }
+        }
+
+        // 키보드 입력 처리
+        document.addEventListener("keydown", (event) => {
+            if (!isTypingComplete) return; // 초기 타이핑 중에는 입력 무시
+
+            const key = event.key;
+
+            if (key === "Enter") {
+                // 엔터를 누르면 새 줄로 이동
+                if (userInput === "3249") {
+                    // "*********************************"을 입력하면 proteur.html로 이동
+                    window.location.href = "proteur.html";
+                } else {
+                    typingText.innerHTML += "<br>>>> "; // 새 입력 대기
+                }
+                userInput = ""; // 입력 초기화
+            } else if (key === "Backspace") {
+                // 백스페이스로 삭제
+                userInput = userInput.slice(0, -1);
+                updateText();
+            } else if (key.length === 1) {
+                // 일반 문자 입력
+                userInput += key;
+                updateText();
+            }
+        });
+
+        // 텍스트 업데이트 함수
+        function updateText() {
+            const initialText = textLines.join("<br>");
+            typingText.innerHTML = initialText + "<br>>>> " + userInput;
+        }
+
+        // 타이핑 시작
+        type();
+    </script>
+</body>
+</html>
