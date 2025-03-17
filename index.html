@@ -3,65 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proteur</title>
+    <title>보안 페이지</title>
     <style>
-        /* 전체 body 스타일 */
+        /* 화면의 중앙에 요소를 배치하는 CSS */
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh; /* 화면 전체 높이 */
             margin: 0;
-            text-align: center;
-            transition: opacity 0.5s ease-in-out; /* 페이드 효과 */
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
 
-        /* 버튼 컨테이너 */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: -10px;
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 200px;
+            font-size: 16px;
         }
 
-        /* 버튼 스타일 */
-        .image-button {
-            width: 80px;
-            height: auto;
+        button {
             cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
         }
     </style>
-
     <script>
-        function fadeOutAndRedirect(url) {
-            document.body.style.opacity = '0'; // 페이드 아웃 효과
-            setTimeout(() => {
-                window.location.href = url; // 페이지 이동
-            }, 500); // 0.5초 후 이동
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const inputPassword = document.getElementById("password").value;
+            const hashedInput = await hashPassword(inputPassword);
+
+            // 비밀번호 "************************************************************"의 SHA-256 해시값
+            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005"; // 이 값은 getHash()에서 확인한 값입니다.
+
+            if (hashedInput === correctHash) {
+                // 비밀번호 인증 성공 후 페이지 이동
+                window.location.href = "hacking_terminal.html"; // 성공 시 새로운 페이지로 이동
+            } else {
+                document.getElementById("result").innerHTML = 
+                    "<p style='color: red;'>패스워드가 틀렸습니다.</p>";
+            }
         }
     </script>
 </head>
 <body>
-
-    <!-- 버튼 4개 -->
-    <div class="button-container">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1" onclick="fadeOutAndRedirect('page1.html')">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2" onclick="fadeOutAndRedirect('page2.html')">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3" onclick="fadeOutAndRedirect('page3.html')">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4" onclick="fadeOutAndRedirect('page4.html')">
+    <div>
+        <input type="password" id="password" placeholder="패스워드를 입력하세요">
+        <button onclick="checkPassword()">확인</button>
+        <div id="result"></div>
     </div>
-
-    <h1>Pro<span style="color: rgb(208, 206, 206);">fessional</span> + <span style="color: rgb(208, 206, 206);">Ama</span>teur</h1>
-
-    <img src="https://proteur-kr.github.io/raphale/RE640X480Proteur_family_2.png" alt="Proteur Family Image">
-
-    <p style="color: rgb(208, 206, 206); font-size: 8pt;">
-        Professional like Amateur. <br>
-        A combination of "Professional" and "Amateur," it refers to an ordinary person <br>
-        with knowledge comparable to that of an expert, who is no longer just a consumer <br>
-        of information but actively expresses their opinions as a contributor.
-    </p>
-
 </body>
 </html>
