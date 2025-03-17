@@ -14,6 +14,7 @@
             min-height: 100vh;
             margin: 0;
             text-align: center;
+            transition: opacity 0.5s ease-in-out; /* 페이드 효과 */
         }
 
         /* 버튼 컨테이너 */
@@ -21,33 +22,34 @@
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: -10px;
+            margin-bottom: 10px;
         }
 
         /* 버튼 스타일 */
         .image-button {
-            width: 80px; /* 버튼 크기 */
+            width: 80px;
             height: auto;
             cursor: pointer;
         }
     </style>
+
+    <script>
+        function fadeOutAndRedirect(url) {
+            document.body.style.opacity = '0'; // 페이드 아웃 효과
+            setTimeout(() => {
+                window.location.href = url; // 페이지 이동
+            }, 500); // 0.5초 후 이동
+        }
+    </script>
 </head>
 <body>
 
     <!-- 버튼 4개 -->
     <div class="button-container">
-        <a href="page1.html">
-            <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
-        </a>
-        <a href="page2.html">
-            <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2">
-        </a>
-        <a href="page3.html">
-            <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3">
-        </a>
-        <a href="page4.html">
-            <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4">
-        </a>
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1" onclick="fadeOutAndRedirect('page1.html')">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2" onclick="fadeOutAndRedirect('page2.html')">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3" onclick="fadeOutAndRedirect('page3.html')">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4" onclick="fadeOutAndRedirect('page4.html')">
     </div>
 
     <h1>Pro<span style="color: rgb(208, 206, 206);">fessional</span> + <span style="color: rgb(208, 206, 206);">Ama</span>teur</h1>
