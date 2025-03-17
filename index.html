@@ -5,38 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>보안 페이지</title>
     <style>
-        /* 화면의 중앙에 요소를 배치하는 CSS */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* 화면 전체 높이 */
+            height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
 
-        input, button {
-            padding: 10px;
-            margin: 10px 0;
-            width: 200px;
+        input {
+            padding: 12px;
+            width: 220px;
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            background-color: #fff;
+            text-align: center; /* 텍스트 중앙 정렬 */
         }
 
         button {
+            padding: 8px;
+            width: 50%; /* 크기 50%로 조정 */
+            font-size: 14px;
+            color: #333;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            background: none;
             cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
+            display: block;
+            margin: 10px auto 0; /* 중앙 정렬 */
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #f0f0f0;
         }
 
         #result {
-            margin-top: 20px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: red;
+            text-align: center;
         }
     </style>
     <script>
@@ -52,22 +63,19 @@
             const inputPassword = document.getElementById("password").value;
             const hashedInput = await hashPassword(inputPassword);
 
-            // 비밀번호 "************************************************************"의 SHA-256 해시값
-            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005"; // 이 값은 getHash()에서 확인한 값입니다.
+            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005";
 
             if (hashedInput === correctHash) {
-                // 비밀번호 인증 성공 후 페이지 이동
-                window.location.href = "hacking_terminal.html"; // 성공 시 새로운 페이지로 이동
+                window.location.href = "hacking_terminal.html";
             } else {
-                document.getElementById("result").innerHTML = 
-                    "<p style='color: red;'>패스워드가 틀렸습니다.</p>";
+                document.getElementById("result").innerText = "패스워드가 틀렸습니다.";
             }
         }
     </script>
 </head>
 <body>
     <div>
-        <input type="password" id="password" placeholder="패스워드를 입력하세요">
+        <input type="password" id="password" placeholder="Password">
         <button onclick="checkPassword()">확인</button>
         <div id="result"></div>
     </div>
