@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proteur</title>
+    <style>
+        /* 전체 body 스타일 */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out; /* 페이드 효과 */
+        }
+
+        /* 버튼 컨테이너 */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: -10px;
+        }
+
+        /* 버튼 스타일 */
+        .image-button {
+            width: 80px;
+            height: auto;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function fadeOutAndRedirect(url) {
+            document.body.style.opacity = '0'; // 페이드 아웃 효과
+            setTimeout(() => {
+                window.location.href = url; // 페이지 이동
+            }, 500); // 0.5초 후 이동
+        }
+    </script>
+</head>
+<body>
+
+    <!-- 버튼 4개 -->
+    <div class="button-container">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1" onclick="fadeOutAndRedirect('page1.html')">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2" onclick="fadeOutAndRedirect('page2.html')">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3" onclick="fadeOutAndRedirect('page3.html')">
+        <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4" onclick="fadeOutAndRedirect('page4.html')">
+    </div>
+
+    <h1>Pro<span style="color: rgb(208, 206, 206);">fessional</span> + <span style="color: rgb(208, 206, 206);">Ama</span>teur</h1>
+
+    <img src="https://proteur-kr.github.io/raphale/RE640X480Proteur_family_2.png" alt="Proteur Family Image">
+
+    <p style="color: rgb(208, 206, 206); font-size: 8pt;">
+        Professional like Amateur. <br>
+        A combination of "Professional" and "Amateur," it refers to an ordinary person <br>
+        with knowledge comparable to that of an expert, who is no longer just a consumer <br>
+        of information but actively expresses their opinions as a contributor.
+    </p>
+
+</body>
+</html>
