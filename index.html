@@ -11,28 +11,31 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* 최소 높이 설정 */
+            min-height: 100vh;
             margin: 0;
             text-align: center;
             position: relative;
         }
 
-        /* 버튼 컨테이너 */
+        /* 버튼 컨테이너: 페이지 상단으로 이동 */
         .button-container {
+            position: absolute;
+            top: 20px; /* 버튼을 페이지 위쪽으로 배치 */
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 10px;
         }
 
         /* 버튼 스타일 */
         .image-button {
-            width: 100px;
+            width: 80px; /* 버튼 크기 조정 */
             height: auto;
             cursor: pointer;
         }
 
-        /* 기본 콘텐츠 */
+        /* 콘텐츠 스타일 */
         .content, .button-content {
             position: absolute;
             top: 50%;
@@ -45,13 +48,13 @@
         /* 숨겨진 콘텐츠 */
         .hidden {
             opacity: 0;
-            visibility: hidden; /* 공간 유지 */
+            visibility: hidden;
         }
     </style>
 </head>
 <body>
 
-    <!-- 버튼 4개 -->
+    <!-- 버튼 4개 (페이지 상단) -->
     <div class="button-container">
         <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1" onclick="showContent(1)">
         <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2" onclick="showContent(2)">
