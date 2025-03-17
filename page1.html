@@ -69,11 +69,19 @@
             }
         });
 
-        // 모바일에서 뒤로가기 동작을 처리
+        // 뒤로가기 버튼 감지
         window.addEventListener("popstate", function(event) {
+            // 뒤로가기가 발생했을 때 Go Back 링크를 클릭
             const goBackLink = document.getElementById("goBackLink");
             goBackLink.click(); // Go Back 링크 클릭
         });
+
+        // 브라우저 뒤로가기 버튼 클릭 시
+        history.pushState(null, null, location.href); // 새로고침 없이 히스토리 상태를 하나 추가
+        window.onpopstate = function() {
+            const goBackLink = document.getElementById("goBackLink");
+            goBackLink.click(); // Go Back 링크 클릭
+        };
     </script>
 
 </body>
