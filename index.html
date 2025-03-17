@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proteur</title>
     <style>
-        /* 전체 body의 스타일을 설정 */
+        /* 전체 body 스타일 */
         body {
             display: flex;
             flex-direction: column; /* 세로로 배치 */
@@ -16,13 +16,27 @@
             text-align: center; /* 텍스트 가운데 정렬 */
         }
 
-        /* 이미지를 가로로 정렬 */
+        /* 버튼 컨테이너: 버튼 4개를 가로 정렬 */
+        .button-container {
+            display: flex;
+            justify-content: center; /* 버튼을 가로 중앙 정렬 */
+            gap: 15px; /* 버튼 간 간격 조정 */
+            margin-bottom: 20px; /* 아래 요소와의 간격 */
+        }
+
+        /* 버튼 이미지 스타일 */
+        .image-button {
+            width: 100px; /* 버튼 크기 조정 */
+            height: auto;
+        }
+
+        /* 일반 이미지 스타일 */
         img {
             max-width: 100%; /* 이미지 크기를 화면에 맞게 조정 */
             height: auto; /* 비율을 유지하면서 크기 조정 */
         }
 
-        /* 색상, 폰트 크기 및 스타일 */
+        /* 텍스트 스타일 */
         .description {
             color: rgb(208, 206, 206); /* 텍스트 색상 */
             font-size: 8pt; /* 엑셀 폰트 기준 8 사이즈 */
@@ -40,16 +54,34 @@
     </style>
 </head>
 <body>
+
+    <!-- 버튼 4개 추가 -->
+    <div class="button-container">
+        <a href="https://link1.com" target="_blank">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
+        </a>
+        <a href="https://link2.com" target="_blank">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2">
+        </a>
+        <a href="https://link3.com" target="_blank">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3">
+        </a>
+        <a href="https://link4.com" target="_blank">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4">
+        </a>
+    </div>
+
     <h1>
         Pro<span class="highlight">fessional</span> + <span class="highlight">Ama</span>teur
     </h1>
+    
     <img src="https://proteur-kr.github.io/raphale/RE640X480Proteur_family_2.png" alt="Proteur Family Image">
     
     <p class="description">
         Amateur like a professional. It is a combination of professional and amateur. <br>
-        With the popularization of Web 2.0, ordinary netizens have emerged as not just <br>
-        consumers of information but as contributors, actively expressing their opinions <br>
-        and becoming people with expertise equal to that of professionals.
+        With the popularization of Web 2.0, ordinary netizens have emerged as not just consumers of information <br>
+        but as contributors, actively expressing their opinions and becoming people with expertise equal to that of professionals.
     </p>
+
 </body>
 </html>
