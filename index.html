@@ -14,101 +14,52 @@
             min-height: 100vh;
             margin: 0;
             text-align: center;
-            position: relative;
         }
 
-        /* 버튼 컨테이너: 페이지 상단으로 이동 */
+        /* 버튼 컨테이너 */
         .button-container {
-            position: absolute;
-            top: 20px; /* 버튼을 페이지 위쪽으로 배치 */
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             justify-content: center;
             gap: 10px;
+            margin-bottom: 10px;
         }
 
         /* 버튼 스타일 */
         .image-button {
-            width: 80px; /* 버튼 크기 조정 */
+            width: 80px; /* 버튼 크기 */
             height: auto;
             cursor: pointer;
-        }
-
-        /* 콘텐츠 스타일 */
-        .content, .button-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        /* 숨겨진 콘텐츠 */
-        .hidden {
-            opacity: 0;
-            visibility: hidden;
         }
     </style>
 </head>
 <body>
 
-    <!-- 버튼 4개 (페이지 상단) -->
+    <!-- 버튼 4개 -->
     <div class="button-container">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1" onclick="showContent(1)">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2" onclick="showContent(2)">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3" onclick="showContent(3)">
-        <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4" onclick="showContent(4)">
+        <a href="page1.html">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
+        </a>
+        <a href="page2.html">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button2.png" alt="Button 2">
+        </a>
+        <a href="page3.html">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button3.png" alt="Button 3">
+        </a>
+        <a href="page4.html">
+            <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4">
+        </a>
     </div>
 
-    <!-- 기존 콘텐츠 -->
-    <div id="mainContent" class="content">
-        <h1>Pro<span style="color: rgb(208, 206, 206);">fessional</span> + <span style="color: rgb(208, 206, 206);">Ama</span>teur</h1>
-        <img src="https://proteur-kr.github.io/raphale/RE640X480Proteur_family_2.png" alt="Proteur Family Image">
-        <p style="color: rgb(208, 206, 206); font-size: 8pt;">
-            Amateur like a professional. It is a combination of professional and amateur. <br>
-            With the popularization of Web 2.0, ordinary netizens have emerged <br>
-            as not just consumers of information but as contributors, <br>
-            actively expressing their opinions and becoming experts.
-        </p>
-    </div>
+    <h1>Pro<span style="color: rgb(208, 206, 206);">fessional</span> + <span style="color: rgb(208, 206, 206);">Ama</span>teur</h1>
 
-    <!-- 버튼을 눌렀을 때 나타나는 콘텐츠 -->
-    <div id="buttonContent1" class="button-content hidden">
-        <h2>Button 1 Content</h2>
-        <p>This is the content for button 1.</p>
-    </div>
+    <img src="https://proteur-kr.github.io/raphale/RE640X480Proteur_family_2.png" alt="Proteur Family Image">
 
-    <div id="buttonContent2" class="button-content hidden">
-        <h2>Button 2 Content</h2>
-        <p>This is the content for button 2.</p>
-    </div>
-
-    <div id="buttonContent3" class="button-content hidden">
-        <h2>Button 3 Content</h2>
-        <p>This is the content for button 3.</p>
-    </div>
-
-    <div id="buttonContent4" class="button-content hidden">
-        <h2>Button 4 Content</h2>
-        <p>This is the content for button 4.</p>
-    </div>
-
-    <script>
-        function showContent(buttonNumber) {
-            // 기존 콘텐츠 숨기기
-            document.getElementById("mainContent").classList.add("hidden");
-
-            // 모든 버튼 콘텐츠 숨기기
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`buttonContent${i}`).classList.add("hidden");
-            }
-
-            // 선택한 버튼의 콘텐츠 표시
-            document.getElementById(`buttonContent${buttonNumber}`).classList.remove("hidden");
-        }
-    </script>
+    <p style="color: rgb(208, 206, 206); font-size: 8pt;">
+        Amateur like a professional. It is a combination of professional and amateur. <br>
+        With the popularization of Web 2.0, ordinary netizens have emerged <br>
+        as not just consumers of information but as contributors, <br>
+        actively expressing their opinions and becoming experts.
+    </p>
 
 </body>
 </html>
