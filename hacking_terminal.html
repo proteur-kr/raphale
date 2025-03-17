@@ -26,6 +26,16 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+        input {
+            background-color: #000;
+            color: #0f0;
+            border: none;
+            font-family: 'Courier New', Courier, monospace;
+            outline: none;
+            width: 100%;
+            font-size: 1.5em;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -77,7 +87,23 @@
                 // ">>> trace_block = 82%" 타이핑
                 typingText.innerHTML += "<br>>> trace_block = " + tracePercentage + "%";
                 startTrace(); // 트레이스 진행 시작
+                showInputField(); // 입력 필드 표시
             }
+        }
+
+        // 입력 필드 추가
+        function showInputField() {
+            const inputField = document.createElement("input");
+            inputField.type = "text";
+            inputField.placeholder = "Enter password...";
+            inputField.id = "user-input-field";
+            inputField.addEventListener("input", (event) => {
+                userInput = event.target.value;
+                updateText();
+                clearInterval(traceInterval); // 사용자가 입력하면 트레이스 멈춤
+            });
+            document.body.appendChild(inputField);
+            inputField.focus(); // 키패드 활성화
         }
 
         // 타이핑 중 숫자 올라가는 부분
@@ -98,33 +124,6 @@
                 }
             }, 500); // 0.5초마다 1% 증가
         }
-
-        // 키보드 입력 처리
-        document.addEventListener("keydown", (event) => {
-            if (!isTypingComplete) return; // 초기 타이핑 중에는 입력 무시
-
-            const key = event.key;
-
-            if (key === "Enter") {
-                // 엔터를 누르면 새 줄로 이동
-                if (userInput === "3249") {
-                    // "3249"을 입력하면 proteur.html로 이동
-                    window.location.href = "proteur.html";
-                } else {
-                    typingText.innerHTML += "<br>>>> "; // 새 입력 대기
-                }
-                userInput = ""; // 입력 초기화
-            } else if (key === "Backspace") {
-                // 백스페이스로 삭제
-                userInput = userInput.slice(0, -1);
-                updateText();
-            } else if (key.length === 1) {
-                // 일반 문자 입력
-                userInput += key;
-                updateText();
-                clearInterval(traceInterval); // 사용자가 입력하면 트레이스 멈춤
-            }
-        });
 
         // 텍스트 업데이트 함수
         function updateText() {
