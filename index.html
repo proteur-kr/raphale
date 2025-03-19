@@ -86,7 +86,7 @@
             }
 
             .logo {
-                width: 105%; /* 모바일에서는 로고 크기를 50%로 설정 */
+                width: 110%; /* 모바일에서는 로고 크기를 50%로 설정 */
             }
         }
 
@@ -100,6 +100,19 @@
                 width: 40%; /* 태블릿에서는 로고 크기를 40%로 설정 */
             }
         }
+
+        /* Proteur 텍스트 스타일 */
+        .proteur-text {
+            font-size: 50px;
+            font-weight: bold;
+            color: #FF0000;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
     </style>
 </head>
 <body>
@@ -110,6 +123,8 @@
         <input type="password" id="password" placeholder="Password">
         <div id="result"></div>
     </div>
+
+    <div class="proteur-text hidden" id="proteurText">Proteur</div>
 
     <script>
         let timer;
@@ -131,10 +146,9 @@
                 sessionStorage.setItem('access_to_terminal', 'true');
                 window.location.href = "hacking_terminal.html";
             } else {
-                // 비밀번호가 틀렸을 때 placeholder 텍스트를 "Proteur"로 변경
-                const passwordInput = document.getElementById("password");
-                passwordInput.setAttribute("placeholder", "Proteur");
-
+                // 비밀번호가 틀렸을 때 입력란 숨기고 "Proteur" 텍스트 보이기
+                document.querySelector('.input-wrapper').classList.add('hidden');
+                document.getElementById('proteurText').classList.remove('hidden');
             }
         }
 
