@@ -65,6 +65,11 @@
     <a href="proteur.html" class="go-back" id="goBackLink">Go Back</a>
 
     <script>
+        // 페이지 로드 시 접근 권한 확인
+        if (sessionStorage.getItem('access_to_proteur') !== 'true') {
+            window.location.href = "proteur.html";
+        }
+
         // 페이지 로드 후 버튼 이미지 페이드인 효과
         window.onload = function() {
             setTimeout(function() {
