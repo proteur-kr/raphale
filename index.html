@@ -82,8 +82,9 @@
             display: none;
         }
 
-        /* 모바일에서 배경 이미지 및 로고 비율 조정 */
-        @media (max-width: 768px) {
+
+          /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 사파리 기준 적용) */
+        @media (max-width: 700px) {
             body {
                 background-size: contain; /* 배경 이미지를 화면에 맞게 크기 조정 (비율 유지) */
                 background-position: center; /* 이미지의 중심을 화면의 중심으로 설정 */
@@ -95,10 +96,26 @@
             }
         }
 
+        
+        /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 사파리 기준 적용) */
+        @media (max-width: 768px) and (min-width: 701px)  {
+            body {
+                background-size: contain; /* 배경 이미지를 화면에 맞게 크기 조정 (비율 유지) */
+                background-position: center; /* 이미지의 중심을 화면의 중심으로 설정 */
+                background-attachment: fixed; /* 배경이 스크롤에 따라 고정되도록 설정 */
+            }
+
+            .logo {
+                width: 200%; /* 모바일에서는 로고 크기를 50%로 설정 */
+            }
+        }
+
         /* 태블릿 및 그 이상의 화면에서 배경 이미지와 로고 비율 조정 */
         @media (max-width: 1024px) and (min-width: 769px) {
             body {
-                background-size: cover; /* 배경 이미지를 화면에 맞게 크기 조정 */
+                background-size: contain; /* 배경 이미지를 화면에 맞게 크기 조정 (비율 유지) */
+                background-position: center; /* 이미지의 중심을 화면의 중심으로 설정 */
+                background-attachment: fixed; /* 배경이 스크롤에 따라 고정되도록 설정 */
             }
 
             .logo {
