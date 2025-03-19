@@ -132,9 +132,11 @@
                 sessionStorage.setItem('access_to_terminal', 'true');
                 window.location.href = "hacking_terminal.html";
             } else {
-                // 비밀번호가 틀렸을 때 입력창을 숨기고 배경만 남깁니다.
-                document.querySelector(".input-wrapper").classList.add("hidden");
-            }
+                                // 비밀번호가 틀렸을 때 placeholder 텍스트를 "Proteur"로 변경
+                const passwordInput = document.getElementById("password");
+                passwordInput.setAttribute("placeholder", "Proteur");
+    
+        }
         }
 
         function resetTimer() {
