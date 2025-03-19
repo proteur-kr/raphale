@@ -21,7 +21,7 @@
         }
 
         .logo {
-            width: 100%; /* 이미지 크기를 30%로 조정 */
+            width: 30%; /* 기본적으로 로고 크기를 30%로 설정 */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -76,6 +76,28 @@
         /* 입력란이 숨겨졌을 때의 스타일 */
         .hidden {
             display: none;
+        }
+
+        /* 모바일에서 배경 이미지 및 로고 비율 조정 */
+        @media (max-width: 768px) {
+            body {
+                background-size: contain; /* 배경 이미지를 화면에 맞게 크기 조정 (비율 유지) */
+            }
+
+            .logo {
+                width: 50%; /* 모바일에서는 로고 크기를 50%로 설정 */
+            }
+        }
+
+        /* 태블릿 및 그 이상의 화면에서 배경 이미지와 로고 비율 조정 */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            body {
+                background-size: cover; /* 배경 이미지를 화면에 맞게 크기 조정 */
+            }
+
+            .logo {
+                width: 40%; /* 태블릿에서는 로고 크기를 40%로 설정 */
+            }
         }
     </style>
 </head>
