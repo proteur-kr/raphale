@@ -26,6 +26,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            z-index: 10; /* 로고가 배경 위에 오도록 설정 */
         }
 
         .input-wrapper {
@@ -36,6 +37,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 20; /* 입력란이 배경 이미지와 로고 위에 오도록 설정 */
         }
 
         input {
@@ -52,7 +54,7 @@
             text-align: center;
             box-shadow: none; /* 그림자 제거 */
             position: relative;
-            z-index: 10; /* 입력창이 이미지 위에 오도록 설정 */
+            z-index: 30; /* 입력창이 로고 위에 오도록 설정 */
         }
 
         /* placeholder 텍스트 스타일 */
@@ -68,7 +70,7 @@
             color: red;
             text-align: center;
             position: relative;
-            z-index: 10; /* 오류 메시지도 이미지 위에 표시 */
+            z-index: 30; /* 오류 메시지 위치 조정 */
         }
 
         /* 입력란이 숨겨졌을 때의 스타일 */
