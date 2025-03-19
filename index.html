@@ -23,24 +23,7 @@
             border-radius: 5px;
             outline: none;
             background-color: #fff;
-            text-align: center; /* 텍스트 중앙 정렬 */
-        }
-
-        button {
-            padding: 8px;
-            width: 50%; /* 크기 50%로 조정 */
-            font-size: 14px;
-            color: #333;
-            border: 1px solid #aaa;
-            border-radius: 5px;
-            background: none;
-            cursor: pointer;
-            display: block;
-            margin: 10px auto 0; /* 중앙 정렬 */
-        }
-
-        button:hover {
-            background-color: #f0f0f0;
+            text-align: center;
         }
 
         #result {
@@ -51,6 +34,9 @@
         }
     </style>
     <script>
+        let timer; // 타이머를 저장할 변수
+
+        // 비밀번호를 SHA-256으로 해시하는 함수
         async function hashPassword(password) {
             const encoder = new TextEncoder();
             const data = encoder.encode(password);
@@ -59,25 +45,36 @@
             return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
         }
 
+        // 비밀번호 검증 및 페이지 이동 함수
         async function checkPassword() {
             const inputPassword = document.getElementById("password").value;
             const hashedInput = await hashPassword(inputPassword);
-
-            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005";
+            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005"; // 예시 해시값
 
             if (hashedInput === correctHash) {
-                sessionStorage.setItem('access_to_terminal', 'true'); // 플래그 설정 추가
-                window.location.href = "hacking_terminal.html";
+                sessionStorage.setItem('access_to_terminal', 'true');
+                window.location.href = "hacking_terminal.html"; // 다음 페이지로 이동
             } else {
                 document.getElementById("result").innerText = "패스워드가 틀렸습니다.";
             }
         }
+
+        // 타이머 재설정 함수
+        function resetTimer() {
+            clearTimeout(timer); // 기존 타이머 취소
+            timer = setTimeout(checkPassword, 2000); // 2초 후 검증 함수 호출
+        }
+
+        // 페이지 로드 시 입력 필드에 이벤트 리스너 추가
+        window.onload = function() {
+            const passwordInput = document.getElementById("password");
+            passwordInput.addEventListener("input", resetTimer);
+        };
     </script>
 </head>
 <body>
     <div>
         <input type="password" id="password" placeholder="Password">
-        <button onclick="checkPassword()">확인</button>
         <div id="result"></div>
     </div>
 </body>
