@@ -44,6 +44,11 @@
     <input type="tel" id="hidden-input" maxlength="4" inputmode="numeric">
 
     <script>
+        // 페이지 로드 시 접근 권한 확인
+        if (sessionStorage.getItem('access_to_terminal') !== 'true') {
+            window.location.href = "index.html";
+        }
+
         const textLines = [
             ">>> import hacking_tools",
             ">>> hacking_tools.init()",
@@ -152,6 +157,7 @@
         // 패스워드 검증 함수
         function checkPassword() {
             if (userInput === "0705") {
+                sessionStorage.setItem('access_to_proteur', 'true'); // 플래그 설정
                 window.location.href = "proteur.html"; // 올바른 경우 이동
             } else {
                 typingText.innerHTML += "<br>>> Incorrect password!";
