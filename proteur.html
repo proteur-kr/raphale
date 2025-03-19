@@ -36,6 +36,11 @@
     </style>
 
     <script>
+        // 페이지 로드 시 접근 권한 확인
+        if (sessionStorage.getItem('access_to_proteur') !== 'true') {
+            window.location.href = "hacking_terminal.html";
+        }
+
         function fadeOutAndRedirect(url) {
             document.body.style.opacity = '0'; // 페이드 아웃 효과
             setTimeout(() => {
@@ -54,7 +59,6 @@
         <img class="image-button" src="https://proteur-kr.github.io/raphale/button4.png" alt="Button 4" onclick="fadeOutAndRedirect('page4.html')">
     </div>
 
-    
     <!-- 주석처리함 -->
     <!-- <h1>Pro<span style="color: rgb(208, 206, 206);">fessional</span> + <span style="color: rgb(208, 206, 206);">Ama</span>teur</h1> -->
 
