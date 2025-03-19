@@ -6,24 +6,56 @@
     <title>보안 페이지</title>
     <style>
         body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff; /* 배경을 흰색으로 설정 */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            position: relative;
+        }
+
+        .logo {
+            width: 30%; /* 이미지 크기를 30%로 조정 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .input-wrapper {
+            position: absolute;
+            top: calc(50% + 10px); /* 입력란을 10px 아래로 내림 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         input {
-            padding: 12px;
-            width: 220px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 20px;
+            width: 155px;
+            height: 20px;
+            font-size: 20px;
+            border-radius: 30px; /* 모서리를 10px 만큼 둥글게 설정 */
+            font-weight: bold; /* 글자를 진하게 설정 */
+            color: #FFFFFF; /* 흰색 글자 */
+            border: none; /* 테두리 제거 */
             outline: none;
-            background-color: #fff;
+            background-color: #FF0000; /* 빨강 배경 */
             text-align: center;
+            box-shadow: none; /* 그림자 제거 */
+            position: relative;
+            z-index: 10; /* 입력창이 이미지 위에 오도록 설정 */
+        }
+
+        /* placeholder 텍스트 스타일 */
+        input::placeholder {
+            color: #FFFFFF; /* placeholder 텍스트를 흰색으로 변경 */
+            font-size: 33px;
+            font-weight: bold; /* 글자를 진하게 설정 */
         }
 
         #result {
@@ -31,12 +63,28 @@
             font-size: 14px;
             color: red;
             text-align: center;
+            position: relative;
+            z-index: 10; /* 오류 메시지도 이미지 위에 표시 */
+        }
+
+        /* 입력란이 숨겨졌을 때의 스타일 */
+        .hidden {
+            display: none;
         }
     </style>
-    <script>
-        let timer; // 타이머를 저장할 변수
+</head>
+<body>
+    <!-- 프로테우르 로고 -->
+    <img class="logo" src="https://proteur-kr.github.io/raphale/proteur_logo_face.png" alt="Proteur Logo">
 
-        // 비밀번호를 SHA-256으로 해시하는 함수
+    <div class="input-wrapper">
+        <input type="password" id="password" placeholder="Password">
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let timer;
+
         async function hashPassword(password) {
             const encoder = new TextEncoder();
             const data = encoder.encode(password);
@@ -45,37 +93,29 @@
             return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
         }
 
-        // 비밀번호 검증 및 페이지 이동 함수
         async function checkPassword() {
             const inputPassword = document.getElementById("password").value;
             const hashedInput = await hashPassword(inputPassword);
-            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005"; // 예시 해시값
+            const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005";
 
             if (hashedInput === correctHash) {
                 sessionStorage.setItem('access_to_terminal', 'true');
-                window.location.href = "hacking_terminal.html"; // 다음 페이지로 이동
+                window.location.href = "hacking_terminal.html";
             } else {
-                document.getElementById("result").innerText = "패스워드가 틀렸습니다.";
+                // 비밀번호가 틀렸을 때 입력창을 숨기고 배경만 남깁니다.
+                document.querySelector(".input-wrapper").classList.add("hidden");
             }
         }
 
-        // 타이머 재설정 함수
         function resetTimer() {
-            clearTimeout(timer); // 기존 타이머 취소
-            timer = setTimeout(checkPassword, 2000); // 2초 후 검증 함수 호출
+            clearTimeout(timer);
+            timer = setTimeout(checkPassword, 2000);
         }
 
-        // 페이지 로드 시 입력 필드에 이벤트 리스너 추가
         window.onload = function() {
             const passwordInput = document.getElementById("password");
             passwordInput.addEventListener("input", resetTimer);
         };
     </script>
-</head>
-<body>
-    <div>
-        <input type="password" id="password" placeholder="Password">
-        <div id="result"></div>
-    </div>
 </body>
 </html>
