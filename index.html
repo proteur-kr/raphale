@@ -66,6 +66,7 @@
             const correctHash = "b92a65abeeab7f4ac08564e073d6c58e397b71c1042d9da8ba44ea2ab67dc005";
 
             if (hashedInput === correctHash) {
+                sessionStorage.setItem('access_to_terminal', 'true'); // 플래그 설정 추가
                 window.location.href = "hacking_terminal.html";
             } else {
                 document.getElementById("result").innerText = "패스워드가 틀렸습니다.";
