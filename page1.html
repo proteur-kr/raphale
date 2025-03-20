@@ -71,16 +71,9 @@
             will-change: opacity;
         }
 
-        /* 큰 원 스타일: 테두리만 있는 원 */
+        /* 큰 원 스타일: 보이지 않도록 설정 */
         .large-circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid #888;
-            background-color: transparent;
-            position: absolute;
-            top: 0;
-            left: 0;
+            display: none; /* 큰 원을 화면에서 완전히 제거 */
         }
 
         /* 작은 원 스타일: 큰 원 둘레에 배치될 원 */
@@ -139,7 +132,7 @@
     <div class="name" id="nameText">Kang Jun Hyok</div>
 
     <!-- "Go Back" 링크: 이전 페이지로 이동 -->
-    <a href="proteur.html" class="go-back" id="goBackLink">Go Back</a>
+    <a href="proteur.html" class="go-back" id="goBackLink">뒤로 가기</a>
 
     <!-- 큰 원과 작은 원 그룹: 원형 메뉴 -->
     <div class="circle-container" id="circleContainer">
@@ -180,7 +173,7 @@
 
         // 작은 원 배치 함수: 큰 원 둘레에 작은 원을 배치
         function positionCircles() {
-            const radiusLarge = 125; // 큰 원 반지름
+            const radiusLarge = 125; // 큰 원 반지름 (위치 계산용, 실제로는 보이지 않음)
             const radiusSmall = 15; // 작은 원 반지름
             const numberOfCircles = 8; // 작은 원 개수
             const angleStep = 360 / numberOfCircles; // 각도 간격
