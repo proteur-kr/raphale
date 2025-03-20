@@ -54,18 +54,25 @@
         }
 
         /* 큰 원 (250px) */
-        .large-circle {
+        .circle-container {
+            position: absolute;
             width: 250px;
             height: 250px;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .large-circle {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             border: 2px solid #888;
             background-color: transparent;
             position: absolute;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;  /* 초기 상태에서 투명 */
-            transition: opacity 1s ease-in-out;
+	opacity: 0;
         }
 
         /* 작은 원 (30px) */
@@ -74,17 +81,17 @@
             height: 30px;
             border-radius: 50%;
             border: 2px solid #888;
-            background-color: #fff; /* ✅ 기본 색상: 흰색 */
+            background-color: #fff;
             position: absolute;
             opacity: 0;
-            transition: opacity 1s ease-in-out, background-color 0.3s ease; /* ✅ 색상 전환 추가 */
-	cursor: pointer; /* ✅ 마우스 커서를 손가락 모양으로 변경 */
+            transition: opacity 1s ease-in-out, background-color 0.3s ease;
+            cursor: pointer;
         }
 
-   	 /* ✅ 마우스를 올리면 회색(#ccc)으로 변경 */
-   	 .circle:hover {
-   	     background-color: #ccc;
-	}
+        /* 마우스를 올리면 색상 변경 */
+        .circle:hover {
+            background-color: #ccc;
+        }
 
         /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 카카오톡웹 기준 적용) */
          @media (max-width: 450px) {
@@ -100,8 +107,15 @@
             }
         }
 
-        /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 사파리 기준 적용) */
-         @media (max-width: 768px) and (min-width: 451px) {
+            /* 메뉴 원도형 위치조정 */
+            .circle-container {
+                transform: translateX(-50%) translate(10px, -40px);
+            }
+        }
+
+
+        /* 모바일(451px ~ 768px)에서 큰 원과 작은 원 이동 */
+        @media (max-width: 768px) and (min-width: 451px) {
             /* 버튼 이미지 위치 조정 */
             .image-button {
                 margin-top: -680px;  /* 웹 버전과 다른 위치로 설정 */
@@ -114,7 +128,11 @@
             }
         }
 
-
+            /* 메뉴 원도형 위치조정 */
+            .circle-container {
+                transform: translateX(-50%) translate(0px, 0px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -128,19 +146,19 @@
     <!-- "Go Back" 링크 -->
     <a href="proteur.html" class="go-back" id="goBackLink">Go Back</a>
 
-    <!-- 250px 크기 원 -->
-    <div class="large-circle" id="largeCircle"></div>
-
-    <!-- 작은 원들 -->
-    <!-- 작은 원들 (버튼 기능 추가) -->
-    <div class="circle" id="circle1" onclick="circleClick(1)"></div>
-    <div class="circle" id="circle2" onclick="circleClick(2)"></div>
-    <div class="circle" id="circle3" onclick="circleClick(3)"></div>
-    <div class="circle" id="circle4" onclick="circleClick(4)"></div>
-    <div class="circle" id="circle5" onclick="circleClick(5)"></div>
-    <div class="circle" id="circle6" onclick="circleClick(6)"></div>
-    <div class="circle" id="circle7" onclick="circleClick(7)"></div>
-    <div class="circle" id="circle8" onclick="circleClick(8)"></div>
+    <!-- 큰 원 + 작은 원 그룹 -->
+    <div class="circle-container" id="circleContainer">
+        <div class="large-circle"></div>
+        <!-- 작은 원들 -->
+        <div class="circle" id="circle1" onclick="circleClick(1)"></div>
+        <div class="circle" id="circle2" onclick="circleClick(2)"></div>
+        <div class="circle" id="circle3" onclick="circleClick(3)"></div>
+        <div class="circle" id="circle4" onclick="circleClick(4)"></div>
+        <div class="circle" id="circle5" onclick="circleClick(5)"></div>
+        <div class="circle" id="circle6" onclick="circleClick(6)"></div>
+        <div class="circle" id="circle7" onclick="circleClick(7)"></div>
+        <div class="circle" id="circle8" onclick="circleClick(8)"></div>
+    </div>
 
     <script>
         // 페이지 로드 후 버튼 이미지, 텍스트, 큰 원, 작은 원 페이드인 효과
@@ -148,26 +166,26 @@
             setTimeout(function() {
                 document.getElementById("button1").style.opacity = 1;
                 document.getElementById("nameText").style.opacity = 1;
-                document.getElementById("largeCircle").style.opacity = 0; // ✅ 큰 원 보이게 함
-
+                document.getElementById("circleContainer").style.opacity = 1;
                 setTimeout(positionCircles, 500); // 작은 원 배치
             }, 500);
         };
 
         function positionCircles() {
-            const radiusLarge = 125; // 큰 원 반지름 (250px)
-            const radiusSmall = 15; // 작은 원 반지름 (30px)
+            const radiusLarge = 125; // 큰 원 반지름
+            const radiusSmall = 15; // 작은 원 반지름
             const numberOfCircles = 8;
             const angleStep = 360 / numberOfCircles;
 
-            // 큰 원 중심점 (왼쪽으로 5px 이동)
-            const centerX = (window.innerWidth / 2) - 5;
-            const centerY = 30 + radiusLarge;
+            // 큰 원 중심점
+            const container = document.getElementById("circleContainer");
+            const centerX = container.clientWidth / 2;
+            const centerY = container.clientHeight / 2;
 
-            // 작은 원 배치 (왼쪽으로 5px 이동)
+            // 작은 원 배치
             for (let i = 0; i < numberOfCircles; i++) {
                 const angle = angleStep * i;
-                const x = centerX + radiusLarge * Math.cos((angle - 90) * Math.PI / 180) - radiusSmall - 5;
+                const x = centerX + radiusLarge * Math.cos((angle - 90) * Math.PI / 180) - radiusSmall;
                 const y = centerY + radiusLarge * Math.sin((angle - 90) * Math.PI / 180) - radiusSmall;
 
                 const circle = document.getElementById("circle" + (i + 1));
@@ -179,7 +197,7 @@
             }
         }
 
-	 // 작은 원 클릭 시 동작 (각 버튼에 따라 다르게 실행 가능)
+        // 작은 원 클릭 시 동작
         function circleClick(num) {
             alert(`작은 원 ${num}번 클릭됨!`);
         }
@@ -190,7 +208,6 @@
                 document.getElementById("goBackLink").click();
             }
         });
-
         window.addEventListener("popstate", function() {
             document.getElementById("goBackLink").click();
         });
