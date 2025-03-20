@@ -20,25 +20,33 @@
             font-family: Arial, sans-serif;
         }
 
+        /* 버튼 이미지와 텍스트를 묶는 컨테이너 */
+        .button-text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 컨테이너를 정확히 중심에 배치 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0; /* 페이드인 효과를 위해 초기 투명도 설정 */
+            transition: opacity 1s ease-in-out;
+            will-change: opacity;
+        }
+
         /* 버튼 이미지 스타일: 페이드인 효과와 위치 조정 */
         .image-button {
             width: 100px;
             height: auto;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            margin-bottom: 10px;
-            will-change: opacity; /* 성능 최적화 */
+            margin-bottom: 10px; /* 텍스트와의 간격 유지 */
         }
 
-        /* "Kang Jun Hyok" 텍스트 스타일: 페이드인 효과와 위치 조정 */
+        /* "Kang Jun Hyok" 텍스트 스타일 */
         .name {
             font-size: 18px;
             font-weight: bold;
             color: #333;
-            margin-top: 10px;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            will-change: opacity;
+            margin-top: 10px; /* 버튼 이미지와의 간격 유지 */
         }
 
         /* "Go Back" 링크 스타일: 하단에 고정 위치 */
@@ -97,12 +105,8 @@
 
         /* 반응형 디자인: 1024px 이하 공통 스타일 */
         @media (max-width: 1024px) {
-            .image-button {
+            .button-text-container {
                 margin-top: 0px; /* 기본 위치 */
-            }
-            .name {
-                margin-top: 10px; /* 텍스트 위치 조정 */
-                transform: none; /* 수직 이동 초기화 */
             }
             .circle-container {
                 transform: translate(-4px, -50px); /* 기본 위치 */
@@ -111,8 +115,8 @@
 
         /* 태블릿 환경(769px ~ 1024px) */
         @media (max-width: 1024px) and (min-width: 769px) {
-            .image-button {
-                margin-top: 100px; /* 태블릿에서 버튼 위치 조정 */
+            .button-text-container {
+                margin-top: 100px; /* 태블릿에서 버튼과 텍스트 위치 조정 */
             }
         }
 
@@ -125,18 +129,16 @@
     </style>
 </head>
 <body>
-    <!-- 버튼 이미지: 페이지 상단에 표시 -->
-    <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Kang Jun Hyok 메뉴 버튼" loading="lazy">
-
-    <!-- "Kang Jun Hyok" 텍스트: 이름 표시 -->
-    <div class="name" id="nameText">Kang Jun Hyok</div>
-
-    <!-- "Go Back" 링크: 이전 페이지로 이동 -->
-    <a href="proteur.html" class="go-back" id="goBackLink">뒤로 가기</a>
-
     <!-- 큰 원과 작은 원 그룹: 원형 메뉴 -->
     <div class="circle-container" id="circleContainer">
         <div class="large-circle"></div>
+        <!-- 버튼 이미지와 텍스트를 묶는 컨테이너 -->
+        <div class="button-text-container" id="buttonTextContainer">
+            <!-- 버튼 이미지 -->
+            <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Kang Jun Hyok 메뉴 버튼" loading="lazy">
+            <!-- "Kang Jun Hyok" 텍스트 -->
+            <div class="name" id="nameText">Kang Jun Hyok</div>
+        </div>
         <!-- 작은 원들: 클릭 가능한 메뉴 항목 -->
         <div class="circle" id="circle1" aria-label="메뉴 1번"></div>
         <div class="circle" id="circle2" aria-label="메뉴 2번"></div>
@@ -148,24 +150,25 @@
         <div class="circle" id="circle8" aria-label="메뉴 8번"></div>
     </div>
 
+    <!-- "Go Back" 링크: 이전 페이지로 이동 -->
+    <a href="proteur.html" class="go-back" id="goBackLink">뒤로 가기</a>
+
     <script>
         // DOM이 로드된 후 실행: 페이지 초기화
         document.addEventListener("DOMContentLoaded", function() {
             // 필수 요소 가져오기
-            const button1 = document.getElementById("button1");
-            const nameText = document.getElementById("nameText");
+            const buttonTextContainer = document.getElementById("buttonTextContainer");
             const circleContainer = document.getElementById("circleContainer");
 
             // 요소가 존재하는지 확인
-            if (!button1 || !nameText || !circleContainer) {
+            if (!buttonTextContainer || !circleContainer) {
                 console.error("필수 요소를 찾을 수 없습니다.");
                 return;
             }
 
             // 페이드인 효과: 0.5초 후 요소 표시
             setTimeout(function() {
-                button1.style.opacity = 1;
-                nameText.style.opacity = 1;
+                buttonTextContainer.style.opacity = 1;
                 circleContainer.style.opacity = 1;
                 setTimeout(positionCircles, 500); // 작은 원 배치
             }, 500);
