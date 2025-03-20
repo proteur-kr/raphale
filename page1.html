@@ -105,8 +105,8 @@
             background-color: #ccc;
         }
 
-        /* 반응형 디자인: 1024px 이하 공통 스타일 */
-        @media (max-width: 1024px) {
+        /* 반응형 디자인: 2048px 이하 공통 스타일 */
+        @media (max-width: 2048px) {
             .button-text-container {
                 margin-top: 0px; /* 기본 위치 */
             }
@@ -115,15 +115,18 @@
             }
         }
 
-        /* 태블릿 환경(769px ~ 1024px) */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .button-text-container {
-                margin-top: 100px; /* 태블릿에서 버튼과 텍스트 위치 조정 */
+        /* 모바일 환경(768px 이하, 아이폰 16 Pro 기준: 430px x 932px, 카카오톡 웹뷰) */
+        @media (max-width: 768px) and (min-width:451{
+            .circle-container {
+                transform: translate(0px, calc(-120px - 40px)) scale(0.8); /* 기존 이동값에 위로 120px 추가 및 80% 축소 */
+                transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
             }
-        }
+            .button-text-container {
+                transform: translate(-50%, -50%) scale(2); /* .circle-container 축소에 맞춰 버튼과 텍스트 크기 복원 */
+            }
 
         /* 모바일 환경(768px 이하, 아이폰 16 Pro 기준: 430px x 932px, 카카오톡 웹뷰) */
-        @media (max-width: 768px) {
+        @media (max-width: 450px) {
             .circle-container {
                 transform: translate(0px, calc(-120px - 40px)) scale(0.8); /* 기존 이동값에 위로 120px 추가 및 80% 축소 */
                 transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
