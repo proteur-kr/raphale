@@ -94,6 +94,7 @@
         }
 
         /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 카카오톡웹 기준 적용) */
+	    
          @media (max-width: 450px) {
             /* 버튼 이미지 위치 조정 */
             .image-button {
@@ -115,6 +116,7 @@
 
 
         /* 모바일(451px ~ 768px)에서 큰 원과 작은 원 이동 */
+	    
         @media (max-width: 768px) and (min-width: 451px) {
             /* 버튼 이미지 위치 조정 */
             .image-button {
@@ -133,6 +135,30 @@
                 transform: translateX(-50%) translate(-4px, -50px);
             }
         }
+	    
+        /* 태블릿 및 그 이상의 화면에서 배경 이미지와 로고 비율 조정 */
+        @media (max-width: 1024px) and (min-width: 769px) {
+		
+             /* 버튼 이미지 위치 조정 */
+            .image-button {
+                margin-top: -680px;  /* 웹 버전과 다른 위치로 설정 */
+            }
+
+            /* "Kang Jun Hyok" 텍스트 위치 조정 */
+            .name {
+                margin-top: 10px;  /* 모바일에서 텍스트의 위치를 더 가깝게 설정 */
+                transform: translateY();  /* 수직 이동 초기화 */
+            }
+        }
+
+            /* 메뉴 원도형 위치조정 */
+            .circle-container {
+                transform: translateX(-50%) translate(-4px, -50px);
+            }
+        }
+	    
+
+		
     </style>
 </head>
 <body>
