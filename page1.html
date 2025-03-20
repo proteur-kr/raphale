@@ -3,7 +3,7 @@
 <head>
     <!-- 문자 인코딩 및 뷰포트 설정 -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- 페이지 제목: SEO를 고려한 구체적인 제목 설정 -->
     <title>Kang Jun Hyok - 프로필 페이지</title>
     <style>
@@ -39,6 +39,7 @@
             width: 100px;
             height: auto;
             margin-bottom: 10px; /* 텍스트와의 간격 설정 */
+            object-fit: contain; /* 이미지 비율 유지 */
         }
 
         /* 이름 텍스트 스타일: "Kang Jun Hyok" 표시 */
@@ -110,8 +111,11 @@
                 transform: scale(0.9); /* 90% 축소 */
                 transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
             }
-            .button-text-container {
-                transform: translate(-50%, -50%) scale(1.111); /* scale(0.9)의 역수로 크기 복원 (1 / 0.9 ≈ 1.111) */
+            .image-button {
+                width: 111.11px; /* 원래 크기(100px)를 scale(0.9)로 나눈 값 (100 / 0.9 ≈ 111.11) */
+            }
+            .name {
+                font-size: 20px; /* 원래 크기(18px)를 scale(0.9)로 나눈 값 (18 / 0.9 = 20) */
             }
             .circle {
                 transform: scale(1.111); /* scale(0.9)의 역수로 작은 원 크기 복원 */
@@ -125,13 +129,21 @@
                 transform: scale(0.8); /* 80% 축소 */
                 transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
             }
-            .button-text-container {
-                transform: translate(-50%, -50%) scale(1.25); /* scale(0.8)의 역수로 크기 복원 (1 / 0.8 = 1.25) */
+            .image-button {
+                width: 125px; /* 원래 크기(100px)를 scale(0.8)로 나눈 값 (100 / 0.8 = 125) */
+            }
+            .name {
+                font-size: 20px; /* 원래 크기(18px)를 scale(0.8)로 나눈 값 (18 / 0.8 = 22.5)에서 가독성을 위해 20px로 조정 */
             }
             .circle {
                 transform: scale(1.25); /* scale(0.8)의 역수로 작은 원 크기 복원 */
                 transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
             }
+        }
+
+        /* 카카오톡 웹뷰 환경: 하단 고정 요소 조정 */
+        .kakaotalk .go-back {
+            bottom: 60px; /* 하단 탭 바와 겹치지 않도록 여백 증가 */
         }
     </style>
 </head>
@@ -162,21 +174,34 @@
 
     <script>
         // 페이지 초기화: DOM 로드 후 실행
+        // 주의: PC, 태블릿, 모바일 환경에서 배치가 잘 맞는지 테스트 필요 (특히 카카오톡 웹뷰 환경)
+        // 추가 테스트: 버튼 이미지와 텍스트의 크기 및 비율이 사파리와 카카오톡 웹뷰에서 의도대로 표시되는지 확인
         document.addEventListener("DOMContentLoaded", function() {
             // 필수 요소 가져오기
             const buttonTextContainer = document.getElementById("buttonTextContainer");
             const circleContainer = document.getElementById("circleContainer");
+            const goBackLink = document.getElementById("goBackLink");
 
             // 요소 존재 여부 확인
-            if (!buttonTextContainer || !circleContainer) {
+            if (!buttonTextContainer || !circleContainer || !goBackLink) {
                 console.error("필수 요소를 찾을 수 없습니다.");
                 return;
             }
 
+            // 카카오톡 웹뷰 감지
+            const isKakaoTalk = /KAKAOTALK/i.test(navigator.userAgent);
+            if (isKakaoTalk) {
+                document.body.classList.add("kakaotalk");
+            }
+
             // 뷰포트 높이에 따른 동적 위치 조정 함수
             function adjustCircleContainerPosition() {
-                const viewportHeight = window.innerHeight;
-                const offset = viewportHeight * 0.3; // 뷰포트 높이의 30%만큼 위로 이동
+                // visualViewport API를 사용하여 실제 가시 영역 높이 계산
+                const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+                let offset = viewportHeight * 0.3; // 기본: 뷰포트 높이의 30%만큼 위로 이동
+                if (isKakaoTalk) {
+                    offset = viewportHeight * 0.25; // 카카오톡 웹뷰에서는 더 작은 이동값 (25%)
+                }
                 // 현재 적용된 transform 속성에서 scale 값을 유지하면서 translateY만 업데이트
                 const currentTransform = window.getComputedStyle(circleContainer).transform;
                 let scaleValue = 1; // 기본 scale 값
@@ -190,8 +215,16 @@
                 circleContainer.style.transform = `translateY(-${offset}px) scale(${scaleValue})`;
             }
 
-            // 초기 위치 조정 및 리사이즈 이벤트 리스너 추가
-            window.addEventListener("resize", adjustCircleContainerPosition);
+            // 초기 위치 조정 및 리사이즈 이벤트 리스너 추가 (디바운싱 적용)
+            let resizeTimeout;
+            function handleResize() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(adjustCircleContainerPosition, 100);
+            }
+            window.addEventListener("resize", handleResize);
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener("resize", handleResize);
+            }
             adjustCircleContainerPosition();
 
             // 페이드인 효과: 0.5초 후 요소 표시
