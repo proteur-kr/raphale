@@ -111,7 +111,7 @@
                 margin-top: 0px; /* 기본 위치 */
             }
             .circle-container {
-                transform: translate(-4px, calc(-300px - 50px)); /* 기존 이동값에 300px 추가 */
+                transform: translate(-4px, calc(-300px - 50px)); /* 기존 이동값에 위로 300px 추가 */
             }
         }
 
@@ -122,10 +122,10 @@
             }
         }
 
-        /* 모바일 환경(450px 이하, 아이폰 16 Pro 기준: 430px x 932px, 카카오톡 웹뷰) */
-        @media (max-width: 450px) {
+        /* 모바일 환경(768px 이하, 아이폰 16 Pro 기준: 430px x 932px, 카카오톡 웹뷰) */
+        @media (max-width: 768px) {
             .circle-container {
-                transform: translate(10px, calc(-200px - 40px)); /* 기존 이동값에 300px 추가 */
+                transform: translate(10px, calc(-200px - 40px)); /* 기존 이동값에 위로 200px 추가 */
             }
         }
     </style>
