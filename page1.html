@@ -85,7 +85,22 @@
    	 .circle:hover {
    	     background-color: #ccc;
 	}
-        /* 모바일에서만 적용될 스타일 */
+
+        /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 카카오톡웹 기준 적용) */
+         @media (max-width: 450px) {
+            /* 버튼 이미지 위치 조정 */
+            .image-button {
+                margin-top: -550px;  /* 웹 버전과 다른 위치로 설정 */
+            }
+
+            /* "Kang Jun Hyok" 텍스트 위치 조정 */
+            .name {
+                margin-top: 10px;  /* 모바일에서 텍스트의 위치를 더 가깝게 설정 */
+                transform: translateY();  /* 수직 이동 초기화 */
+            }
+        }
+
+        /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 사파리 기준 적용) */
          @media (max-width: 768px) and (min-width: 451px) {
             /* 버튼 이미지 위치 조정 */
             .image-button {
