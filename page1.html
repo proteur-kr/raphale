@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- 문자 인코딩 및 뷰포트 설정 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jun Hyok</title>
+    <!-- SEO를 고려한 구체적인 제목 -->
+    <title>Kang Jun Hyok - 프로필 페이지</title>
     <style>
-        /* 전체 body 스타일 */
+        /* 전체 body 스타일: 중앙 정렬 및 기본 레이아웃 설정 */
         body {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             text-align: center;
-            position: relative;
-            transform: translateY(100px);
             background-color: #ffffff;
+            font-family: Arial, sans-serif;
         }
 
-        /* 버튼 이미지 스타일 */
+        /* 버튼 이미지 스타일: 페이드인 효과와 위치 조정 */
         .image-button {
             width: 100px;
             height: auto;
             opacity: 0;
             transition: opacity 1s ease-in-out;
             margin-bottom: 20px;
-            margin-top: 0px;
+            will-change: opacity; /* 성능 최적화 */
         }
 
-        /* "Kang Jun Hyok" 텍스트 스타일 */
+        /* "Kang Jun Hyok" 텍스트 스타일: 페이드인 효과와 위치 조정 */
         .name {
             font-size: 18px;
             font-weight: bold;
@@ -37,34 +38,40 @@
             margin-top: 20px;
             opacity: 0;
             transition: opacity 1s ease-in-out;
-            transform: translateY(-30px);
+            will-change: opacity;
         }
 
-        /* "Go Back" 링크 스타일 */
+        /* "Go Back" 링크 스타일: 하단에 고정 위치 */
         .go-back {
-            position: absolute;
-            bottom: 150px;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-decoration: none;
             font-size: 16px;
             color: #333;
+            padding: 10px;
+            transition: color 0.3s ease;
         }
 
+        /* "Go Back" 링크 호버 효과 */
         .go-back:hover {
+            color: #555;
             text-decoration: underline;
         }
 
-        /* 큰 원 (250px) */
+        /* 큰 원 컨테이너: 중앙에 위치한 원형 메뉴 */
         .circle-container {
-            position: absolute;
+            position: relative;
             width: 250px;
             height: 250px;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin: 0 auto;
             opacity: 0;
             transition: opacity 1s ease-in-out;
+            will-change: opacity;
         }
 
+        /* 큰 원 스타일: 테두리만 있는 원 */
         .large-circle {
             width: 100%;
             height: 100%;
@@ -72,10 +79,11 @@
             border: 2px solid #888;
             background-color: transparent;
             position: absolute;
-	opacity: 0;
+            top: 0;
+            left: 0;
         }
 
-        /* 작은 원 (30px) */
+        /* 작은 원 스타일: 큰 원 둘레에 배치될 원 */
         .circle {
             width: 30px;
             height: 30px;
@@ -86,124 +94,98 @@
             opacity: 0;
             transition: opacity 1s ease-in-out, background-color 0.3s ease;
             cursor: pointer;
+            will-change: opacity, background-color;
         }
 
-        /* 마우스를 올리면 색상 변경 */
+        /* 작은 원 호버 효과: 마우스를 올리면 색상 변경 */
         .circle:hover {
             background-color: #ccc;
         }
 
-        /* 모바일에서 배경 이미지 및 로고 비율 조정 (아이폰16pro 카카오톡웹 기준 적용) */
-	    
-         @media (max-width: 450px) {
-            /* 버튼 이미지 위치 조정 */
+        /* 반응형 디자인: 1024px 이하 공통 스타일 */
+        @media (max-width: 1024px) {
             .image-button {
-                margin-top: 0px;  /* 웹 버전과 다른 위치로 설정 */
+                margin-top: 0px; /* 기본 위치 */
             }
-
-            /* "Kang Jun Hyok" 텍스트 위치 조정 */
             .name {
-                margin-top: 10px;  /* 모바일에서 텍스트의 위치를 더 가깝게 설정 */
-                transform: translateY(0);  /* 수직 이동 초기화 */
+                margin-top: 10px; /* 텍스트 위치 조정 */
+                transform: none; /* 수직 이동 초기화 */
             }
-        
-
-            /* 메뉴 원도형 위치조정 */
             .circle-container {
-                transform: translateX(-50%) translate(10px, -40px);
+                transform: translate(-4px, -50px); /* 기본 위치 */
             }
         }
 
-
-        /* 모바일(451px ~ 768px)에서 큰 원과 작은 원 이동 */
-	    
-        @media (max-width: 768px) and (min-width: 451px) {
-            /* 버튼 이미지 위치 조정 */
-            .image-button {
-                margin-top: 0px;  /* 웹 버전과 다른 위치로 설정 */
-            }
-
-            /* "Kang Jun Hyok" 텍스트 위치 조정 */
-            .name {
-                margin-top: 10px;  /* 모바일에서 텍스트의 위치를 더 가깝게 설정 */
-                transform: translateY(0);  /* 수직 이동 초기화 */
-            }
-        
-
-            /* 메뉴 원도형 위치조정 */
-            .circle-container {
-                transform: translateX(-50%) translate(-4px, -50px);
-            }
-        }
-	    
-        /* 태블릿 및 그 이상의 화면에서 배경 이미지와 로고 비율 조정 */
+        /* 태블릿 환경(769px ~ 1024px) */
         @media (max-width: 1024px) and (min-width: 769px) {
-		
-             /* 버튼 이미지 위치 조정 */
             .image-button {
-                margin-top: 100px;  /* 웹 버전과 다른 위치로 설정 */
-            }
-
-            /* "Kang Jun Hyok" 텍스트 위치 조정 */
-            .name {
-                margin-top: 10px;  /* 모바일에서 텍스트의 위치를 더 가깝게 설정 */
-                transform: translateY(0);  /* 수직 이동 초기화 */
-            }
-        
-
-            /* 메뉴 원도형 위치조정 */
-            .circle-container {
-                transform: translateX(-50%) translate(-4px, -50px);
+                margin-top: 100px; /* 태블릿에서 버튼 위치 조정 */
             }
         }
-	    
 
-		
+        /* 모바일 환경(450px 이하, 아이폰 16 Pro 기준: 430px x 932px, 카카오톡 웹뷰) */
+        @media (max-width: 450px) {
+            .circle-container {
+                transform: translate(10px, -40px); /* 모바일에서 원형 메뉴 위치 조정 */
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 버튼 이미지: 페이지 상단에 표시 -->
+    <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Kang Jun Hyok 메뉴 버튼" loading="lazy">
 
-    <!-- 버튼 이미지 -->
-    <img id="button1" class="image-button" src="https://proteur-kr.github.io/raphale/button1.png" alt="Button 1">
-
-    <!-- "Kang Jun Hyok" 텍스트 -->
+    <!-- "Kang Jun Hyok" 텍스트: 이름 표시 -->
     <div class="name" id="nameText">Kang Jun Hyok</div>
 
-    <!-- "Go Back" 링크 -->
+    <!-- "Go Back" 링크: 이전 페이지로 이동 -->
     <a href="proteur.html" class="go-back" id="goBackLink">Go Back</a>
 
-    <!-- 큰 원 + 작은 원 그룹 -->
+    <!-- 큰 원과 작은 원 그룹: 원형 메뉴 -->
     <div class="circle-container" id="circleContainer">
         <div class="large-circle"></div>
-        <!-- 작은 원들 -->
-        <div class="circle" id="circle1" onclick="circleClick(1)"></div>
-        <div class="circle" id="circle2" onclick="circleClick(2)"></div>
-        <div class="circle" id="circle3" onclick="circleClick(3)"></div>
-        <div class="circle" id="circle4" onclick="circleClick(4)"></div>
-        <div class="circle" id="circle5" onclick="circleClick(5)"></div>
-        <div class="circle" id="circle6" onclick="circleClick(6)"></div>
-        <div class="circle" id="circle7" onclick="circleClick(7)"></div>
-        <div class="circle" id="circle8" onclick="circleClick(8)"></div>
+        <!-- 작은 원들: 클릭 가능한 메뉴 항목 -->
+        <div class="circle" id="circle1" aria-label="메뉴 1번"></div>
+        <div class="circle" id="circle2" aria-label="메뉴 2번"></div>
+        <div class="circle" id="circle3" aria-label="메뉴 3번"></div>
+        <div class="circle" id="circle4" aria-label="메뉴 4번"></div>
+        <div class="circle" id="circle5" aria-label="메뉴 5번"></div>
+        <div class="circle" id="circle6" aria-label="메뉴 6번"></div>
+        <div class="circle" id="circle7" aria-label="메뉴 7번"></div>
+        <div class="circle" id="circle8" aria-label="메뉴 8번"></div>
     </div>
 
     <script>
-        // 페이지 로드 후 버튼 이미지, 텍스트, 큰 원, 작은 원 페이드인 효과
-        window.onload = function() {
+        // DOM이 로드된 후 실행: 페이지 초기화
+        document.addEventListener("DOMContentLoaded", function() {
+            // 필수 요소 가져오기
+            const button1 = document.getElementById("button1");
+            const nameText = document.getElementById("nameText");
+            const circleContainer = document.getElementById("circleContainer");
+
+            // 요소가 존재하는지 확인
+            if (!button1 || !nameText || !circleContainer) {
+                console.error("필수 요소를 찾을 수 없습니다.");
+                return;
+            }
+
+            // 페이드인 효과: 0.5초 후 요소 표시
             setTimeout(function() {
-                document.getElementById("button1").style.opacity = 1;
-                document.getElementById("nameText").style.opacity = 1;
-                document.getElementById("circleContainer").style.opacity = 1;
+                button1.style.opacity = 1;
+                nameText.style.opacity = 1;
+                circleContainer.style.opacity = 1;
                 setTimeout(positionCircles, 500); // 작은 원 배치
             }, 500);
-        };
+        });
 
+        // 작은 원 배치 함수: 큰 원 둘레에 작은 원을 배치
         function positionCircles() {
             const radiusLarge = 125; // 큰 원 반지름
             const radiusSmall = 15; // 작은 원 반지름
-            const numberOfCircles = 8;
-            const angleStep = 360 / numberOfCircles;
+            const numberOfCircles = 8; // 작은 원 개수
+            const angleStep = 360 / numberOfCircles; // 각도 간격
 
-            // 큰 원 중심점
+            // 큰 원 중심점 계산
             const container = document.getElementById("circleContainer");
             const centerX = container.clientWidth / 2;
             const centerY = container.clientHeight / 2;
@@ -219,27 +201,31 @@
                     circle.style.left = `${x}px`;
                     circle.style.top = `${y}px`;
                     circle.style.opacity = 1;
+                    // 클릭 이벤트 리스너 동적 추가
+                    circle.addEventListener("click", () => circleClick(i + 1));
                 }
             }
         }
 
-        // 작은 원 클릭 시 동작
+        // 작은 원 클릭 시 동작: 알림 표시
         function circleClick(num) {
             alert(`작은 원 ${num}번 클릭됨!`);
         }
 
-        // 백스페이스 키와 뒤로가기 버튼 감지
+        // 히스토리 조작: 뒤로가기 버튼 감지
+        if (history.state === null) {
+            history.pushState({ page: "current" }, "", location.href);
+        }
+        window.addEventListener("popstate", function() {
+            document.getElementById("goBackLink").click();
+        });
+
+        // 키보드 이벤트: 백스페이스 및 왼쪽 화살표 키로 뒤로가기
         window.addEventListener("keydown", function(event) {
             if (event.key === "Backspace" || event.key === "ArrowLeft") {
                 document.getElementById("goBackLink").click();
             }
         });
-        window.addEventListener("popstate", function() {
-            document.getElementById("goBackLink").click();
-        });
-
-        history.pushState(null, "", location.href);
     </script>
-
 </body>
 </html>
