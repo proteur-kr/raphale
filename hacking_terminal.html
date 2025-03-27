@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="terminal">
-        <div class="text" id="typing-text"></div>
-        <span class="blink" id="cursor">_</span>
+        <div class="terminal-header">HACKING TERMINAL</div>
+        <div class="terminal-body">
+            <p>Enter the code to proceed:</p>
+            <div id="typing-text"></div>
+            <input type="text" id="hidden-input" aria-label="Enter 4-digit code">
+        </div>
     </div>
-
-    <!-- 숨겨진 숫자 입력 필드 (모바일 키패드 활성화 용도) -->
-    <input type="tel" id="hidden-input" maxlength="4" inputmode="numeric">
-
-
+    <script src="/assets/js/terminal.js"></script>
 </body>
 </html>
