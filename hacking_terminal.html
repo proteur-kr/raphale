@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>파이썬 해킹 터미널 - 사용자 입력</title>
-    <link rel="stylesheet" href="assets/css/terminal.css">
-
+    <title>Hacking Terminal</title>
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/src/sha256.min.js"></script>
 </head>
 <body>
     <div class="terminal">
-        <div class="text" id="typing-text"></div>
-        <span class="blink" id="cursor">_</span>
+        <div class="terminal-header">HACKING TERMINAL</div>
+        <div class="terminal-body">
+            <p>Enter the code to proceed:</p>
+            <div id="typing-text"></div>
+            <input type="text" id="hidden-input" style="opacity: 0; position: absolute;">
+        </div>
     </div>
-
-    <!-- 숨겨진 숫자 입력 필드 (모바일 키패드 활성화 용도) -->
-    <input type="tel" id="hidden-input" maxlength="4" inputmode="numeric">
-
-    <script src="assets/js/terminal.js"></script>
-
-
+    <script src="/assets/js/terminal.js"></script>
 </body>
 </html>
