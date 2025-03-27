@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Hacking Terminal</title>
     <link rel="stylesheet" href="/assets/css/terminal.css">
     <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/src/sha256.min.js"></script>
@@ -13,7 +13,7 @@
         <div class="terminal-body">
             <p>Enter the code to proceed:</p>
             <div id="typing-text"></div>
-            <input type="text" id="hidden-input" style="opacity: 0; position: absolute;">
+            <input type="text" id="hidden-input" aria-label="Enter 4-digit code">
         </div>
     </div>
     <script src="/assets/js/terminal.js"></script>
