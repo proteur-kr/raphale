@@ -1,27 +1,27 @@
 body {
-    background-color: #000;
-    color: #0f0;
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 20px;
-    overflow: hidden;
-}
-.terminal {
-    max-width: 800px;
-    margin: 0 auto;
-}
-.text {
-    line-height: 1.5;
-}
-.blink {
-    animation: blink 1s infinite;
-}
-@keyframes blink {
-    50% { opacity: 0; }
-}
-/* 숨겨진 입력 필드 */
-#hidden-input {
-    position: absolute;
-    left: -9999px;
-    opacity: 0;
-}
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .text {
+            line-height: 1.5;
+        }
+        .blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        /* 숨겨진 입력 필드 */
+        #hidden-input {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+        }
