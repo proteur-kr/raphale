@@ -106,7 +106,7 @@
         // 패스워드 검증 함수
         function checkPassword() {
             if (userInput === "0705") {
-                window.location.href = "proteur.html"; // 올바른 경우 이동
+                window.location.href = "/proteur.html"; // 올바른 경우 이동
             } else {
                 typingText.innerHTML += "<br>>> Incorrect password!";
                 setTimeout(() => {
