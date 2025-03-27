@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     (lineIndex > 0 ? "<br>" : "") +
                     textLines[lineIndex].slice(0, charIndex + 1);
                 charIndex++;
-                setTimeout(() => type(), 50); // 속도를 50ms로 조정
+                setTimeout(() => type(), 50);
             } else {
                 charIndex = 0;
                 lineIndex++;
@@ -65,13 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
         hiddenInput.focus();
     }
 
-    // 화면 터치 시 입력 활성화
-    document.addEventListener("click", activateInput);
-
-    // 키보드 입력 처리 (PC)
-    document.addEventListener("keydown", (event) => {
+    // 이벤트 핸들러 함수 정의 (제거 가능하도록)
+    const handleClick = () => activateInput();
+    const handleKeydown = (event) => {
         if (!isTypingComplete) return;
-
         const key = event.key;
         if (key === "Backspace") {
             userInput = userInput.slice(0, -1);
@@ -79,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
             updateText();
             return;
         }
-
         if (key.length === 1 && /[0-9]/.test(key) && userInput.length < 4) {
             userInput += key;
             hiddenInput.value = userInput;
@@ -88,23 +84,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 checkPassword();
             }
         }
-    });
-
-    // 모바일 입력 처리
-    hiddenInput.addEventListener("input", () => {
-        userInput = hiddenInput.value.trim().replace(/[^0-9]/g, ""); // 숫자만 허용
+    };
+    const handleInput = () => {
+        userInput = hiddenInput.value.trim().replace(/[^0-9]/g, "");
         hiddenInput.value = userInput;
         updateText();
         if (userInput.length === 4) {
             checkPassword();
         }
-    });
+    };
+
+    // 이벤트 리스너 등록
+    document.addEventListener("click", handleClick);
+    document.addEventListener("keydown", handleKeydown);
+    hiddenInput.addEventListener("input", handleInput);
 
     // 패스워드 검증 함수
     function checkPassword() {
-        userInput = userInput.trim(); // 공백 제거
+        userInput = userInput.trim();
         if (userInput === "0705") {
-            clearInterval(traceInterval); // 트레이스 중지
+            // 모든 타이머와 이벤트 정리
+            clearInterval(traceInterval);
+            document.removeEventListener("click", handleClick);
+            document.removeEventListener("keydown", handleKeydown);
+            hiddenInput.removeEventListener("input", handleInput);
+            // 인증 상태 저장
+            sessionStorage.setItem("access_to_proteur", "true");
+            console.log("Password correct, redirecting to /proteur.html");
             window.location.href = "/proteur.html";
         } else {
             typingText.innerHTML += "<br>>> Incorrect password!";
@@ -112,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 userInput = "";
                 hiddenInput.value = "";
                 updateText();
-            }, 1500); // 1.5초로 늘림
+            }, 1500);
         }
     }
 
