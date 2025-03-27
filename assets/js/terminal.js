@@ -25,7 +25,7 @@ let tracePercentage = 82;
 let traceInterval;
 
 // 타이핑 속도 설정 (ms 단위)
-const charTypingSpeed = 1; // 글자 간 타이핑 속도
+const charTypingSpeed = 5; // 글자 간 타이핑 속도
 const lineTypingSpeed = 50; // 줄 간 전환 속도
 
 function type() {
