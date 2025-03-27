@@ -1,0 +1,138 @@
+       /* Body 스타일: 페이지 전체를 중앙 정렬하고 기본 레이아웃 설정 */
+       body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        text-align: center;
+        background-color: #ffffff;
+        font-family: Arial, sans-serif;
+    }
+
+    /* 버튼 이미지와 텍스트를 묶는 컨테이너: 원형 메뉴 중심에 배치 */
+    .button-text-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* 컨테이너를 원형 메뉴의 중심에 위치 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0; /* 페이드인 효과를 위한 초기 투명도 */
+        transition: opacity 1s ease-in-out;
+        will-change: opacity; /* 애니메이션 성능 최적화 */
+    }
+
+    /* 버튼 이미지 스타일: 원형 메뉴 중심에 표시 */
+    .image-button {
+        width: 100px;
+        height: auto;
+        margin-bottom: 10px; /* 텍스트와의 간격 설정 */
+        object-fit: contain; /* 이미지 비율 유지 */
+    }
+
+    /* 이름 텍스트 스타일: "Kang Jun Hyok" 표시 */
+    .name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 10px; /* 버튼 이미지와의 간격 설정 */
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    }
+
+    /* "Go Back" 링크 스타일: 뷰포트 하단에 고정 */
+    .go-back {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-decoration: none;
+        font-size: 16px;
+        color: #333;
+        padding: 10px;
+        transition: color 0.3s ease;
+    }
+
+    /* "Go Back" 링크 호버 효과: 색상 및 밑줄 변경 */
+    .go-back:hover {
+        color: #555;
+        text-decoration: underline;
+    }
+
+    /* 원형 메뉴 컨테이너: 큰 원과 작은 원을 포함 */
+    .circle-container {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        margin: 0 auto;
+        opacity: 0; /* 페이드인 효과를 위한 초기 투명도 */
+        transition: opacity 1s ease-in-out;
+        will-change: opacity; /* 애니메이션 성능 최적화 */
+    }
+
+    /* 큰 원 스타일: 시각적으로 보이지 않도록 설정 */
+    .large-circle {
+        display: none; /* 큰 원을 화면에서 제거 */
+    }
+
+    /* 작은 원 스타일: 원형 메뉴 둘레에 배치 */
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid #888;
+        background-color: #fff;
+        position: absolute;
+        opacity: 0; /* 페이드인 효과를 위한 초기 투명도 */
+        transition: opacity 1s ease-in-out, background-color 0.3s ease;
+        cursor: pointer;
+        will-change: opacity, background-color; /* 애니메이션 성능 최적화 */
+    }
+
+    /* 작은 원 호버 효과: 마우스 오버 시 배경색 변경 */
+    .circle:hover {
+        background-color: #ccc;
+    }
+
+    /* 반응형 디자인: 태블릿 (861px ~ 1024px) */
+    @media (max-width: 1024px) and (min-width: 861px) {
+        .circle-container {
+            transform: scale(0.9); /* 90% 축소 */
+            transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
+        }
+        .image-button {
+            width: 105px; /* 원래 크기(100px)의 105%로 조정 (100 * 1.05 = 105) */
+        }
+        .name {
+            font-size: 18.9px; /* 원래 크기(18px)의 105%로 조정 (18 * 1.05 = 18.9) */
+        }
+        .circle {
+            transform: scale(1.111); /* scale(0.9)의 역수로 작은 원 크기 복원 */
+            transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
+        }
+    }
+
+    /* 반응형 디자인: 모바일 (860px 이하, 아이폰 16 Pro 기준: 393px x 852px) */
+    @media (max-width: 860px) {
+        .circle-container {
+            transform: scale(0.8); /* 80% 축소 */
+            transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
+        }
+        .image-button {
+            width: 110px; /* 원래 크기(100px)의 110%로 조정 (100 * 1.10 = 110) */
+        }
+        .name {
+            font-size: 18px; /* 원래 크기(18px)의 100%로 조정 (18 * 1.0 = 18) */
+        }
+        .circle {
+            transform: scale(1.25); /* scale(0.8)의 역수로 작은 원 크기 복원 */
+            transform-origin: center; /* 축소 기준점을 중앙으로 설정 */
+        }
+    }
+
+    /* 카카오톡 웹뷰 환경: 하단 고정 요소 조정 */
+    .kakaotalk .go-back {
+        bottom: 60px; /* 하단 탭 바와 겹치지 않도록 여백 증가 */
+    }

@@ -4,50 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proteur</title>
-    <style>
-        /* 전체 body 스타일 */
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-align: center;
-            transition: opacity 0.5s ease-in-out; /* 페이드 효과 */
-            transform: scale(0.8); /* 전체 화면 90% 축소 */
-            transform-origin: center; /* 중앙 기준으로 축소 */
-        }
 
-        /* 버튼 컨테이너 */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px; /* 버튼과 아래 요소 사이의 공간 추가 */
-        }
+    <link rel="stylesheet" href="assets/css/proteur.css">
 
-        /* 버튼 스타일 */
-        .image-button {
-            width: 80px;
-            height: auto;
-            cursor: pointer;
-        }
-    </style>
-
-    <script>
-        // 페이지 로드 시 접근 권한 확인
-        if (sessionStorage.getItem('access_to_proteur') !== 'true') {
-            window.location.href = "hacking_terminal.html";
-        }
-
-        function fadeOutAndRedirect(url) {
-            document.body.style.opacity = '0'; // 페이드 아웃 효과
-            setTimeout(() => {
-                window.location.href = url; // 페이지 이동
-            }, 500); // 0.5초 후 이동
-        }
-    </script>
 </head>
 <body>
 
@@ -72,6 +31,8 @@
         with knowledge comparable to that of an expert, who is no longer just a consumer <br>
         of information but actively expresses their opinions as a contributor.
     </p>
+
+    <script src="assets/js/proteur.js"></script>
 
 </body>
 </html>
