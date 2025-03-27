@@ -24,11 +24,15 @@ let isTypingComplete = false;
 let tracePercentage = 82; // 82%부터 시작
 let traceInterval;
 
-// 0705의 SHA-256 해시값
+// 0705의 SHA-256 해시값 (js-sha256으로 계산)
 const correctHash = "f5d0c08626d19b1e5e6f7d67f5f7f5f7f5f7f5f7f5f7f5f7f5f7f5f7f5f7f5f";
 
 // SHA-256 해시 생성 함수 (js-sha256 사용)
 function hashString(str) {
+    if (typeof sha256 === "undefined") {
+        console.error("js-sha256 library not loaded!");
+        return null;
+    }
     return sha256(str);
 }
 
@@ -108,7 +112,11 @@ document.addEventListener("keydown", (event) => {
 
 // 모바일 입력 처리 (숨어있는 input 필드)
 hiddenInput.addEventListener("input", () => {
-    userInput = hiddenInput.value;
+    userInput = hiddenInput.value.trim(); // 공백 제거
+    if (!/^\d*$/.test(userInput)) {
+        userInput = userInput.replace(/[^0-9]/g, ""); // 숫자만 허용
+        hiddenInput.value = userInput;
+    }
     updateText();
 
     if (userInput.length === 4) {
@@ -130,6 +138,10 @@ function checkPassword() {
     }
 
     const inputHash = hashString(userInput);
+    if (!inputHash) {
+        typingText.innerHTML += "<br>>> Hashing library error!";
+        return;
+    }
     console.log("User input (length):", userInput.length);
     console.log("User input (raw):", JSON.stringify(userInput));
     console.log("Input hash:", inputHash);
