@@ -27,14 +27,9 @@ let traceInterval;
 // 0705의 SHA-256 해시값
 const correctHash = "f5d0c08626d19b1e5e6f7d67f5f7f5f7f5f7f5f7f5f7f5f7f5f7f5f7f5f7f5f";
 
-// SHA-256 해시 생성 함수
-async function hashString(str) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(str);
-    const hash = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hash))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
+// SHA-256 해시 생성 함수 (js-sha256 사용)
+function hashString(str) {
+    return sha256(str);
 }
 
 // 초기 타이핑 함수
@@ -122,23 +117,32 @@ hiddenInput.addEventListener("input", () => {
 });
 
 // 패스워드 검증 함수
-async function checkPassword() {
-    try {
-        const inputHash = await hashString(userInput);
-        if (inputHash === correctHash) {
-            sessionStorage.setItem('access_to_proteur', 'true'); // 플래그 설정
-            window.location.href = "/proteur.html"; // 올바른 경우 이동
-        } else {
-            typingText.innerHTML += "<br>>> Incorrect password!";
-            setTimeout(() => {
-                userInput = ""; // 입력 초기화
-                hiddenInput.value = "";
-                updateText();
-            }, 1000); // 1초 후 초기화
-        }
-    } catch (error) {
-        console.error("Hashing error:", error);
-        typingText.innerHTML += "<br>>> Error verifying password!";
+function checkPassword() {
+    userInput = userInput.trim(); // 공백 제거
+    if (!/^\d{4}$/.test(userInput)) {
+        typingText.innerHTML += "<br>>> Please enter a 4-digit number!";
+        setTimeout(() => {
+            userInput = "";
+            hiddenInput.value = "";
+            updateText();
+        }, 1000);
+        return;
+    }
+
+    const inputHash = hashString(userInput);
+    console.log("User input:", userInput);
+    console.log("Input hash:", inputHash);
+    console.log("Correct hash:", correctHash);
+    if (inputHash === correctHash) {
+        sessionStorage.setItem('access_to_proteur', 'true');
+        window.location.href = "/proteur.html";
+    } else {
+        typingText.innerHTML += "<br>>> Incorrect password!";
+        setTimeout(() => {
+            userInput = "";
+            hiddenInput.value = "";
+            updateText();
+        }, 1000);
     }
 }
 
