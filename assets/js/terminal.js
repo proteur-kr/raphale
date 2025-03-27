@@ -24,6 +24,10 @@ let isTypingComplete = false;
 let tracePercentage = 82;
 let traceInterval;
 
+// 타이핑 속도 설정 (ms 단위)
+const charTypingSpeed = 50; // 글자 간 타이핑 속도
+const lineTypingSpeed = 200; // 줄 간 전환 속도
+
 function type() {
     if (lineIndex < textLines.length) {
         if (charIndex < textLines[lineIndex].length) {
@@ -31,11 +35,11 @@ function type() {
                 (lineIndex > 0 ? "<br>" : "") +
                 textLines[lineIndex].slice(0, charIndex + 1);
             charIndex++;
-            setTimeout(type, 30); // 타이핑 속도 조정
+            setTimeout(type, charTypingSpeed); // 글자 간 타이핑 속도
         } else {
             charIndex = 0;
             lineIndex++;
-            setTimeout(type, 30);
+            setTimeout(type, lineTypingSpeed); // 줄 간 전환 속도
         }
     } else {
         isTypingComplete = true;
