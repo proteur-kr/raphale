@@ -130,7 +130,8 @@ function checkPassword() {
     }
 
     const inputHash = hashString(userInput);
-    console.log("User input:", userInput);
+    console.log("User input (length):", userInput.length);
+    console.log("User input (raw):", JSON.stringify(userInput));
     console.log("Input hash:", inputHash);
     console.log("Correct hash:", correctHash);
     if (inputHash === correctHash) {
