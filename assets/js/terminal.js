@@ -65,30 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
         hiddenInput.focus();
     }
 
-    // 이벤트 핸들러 함수 정의 (제거 가능하도록)
+    // 이벤트 핸들러 함수 정의
     const handleClick = () => activateInput();
-    const handleKeydown = (event) => {
-        if (!isTypingComplete) return;
-        const key = event.key;
-        if (key === "Backspace") {
-            userInput = userInput.slice(0, -1);
-            hiddenInput.value = userInput;
-            updateText();
-            return;
-        }
-        if (key.length === 1 && /[0-9]/.test(key) && userInput.length < 4) {
-            userInput += key;
-            hiddenInput.value = userInput;
-            updateText();
-            if (userInput.length === 4) {
-                checkPassword();
-            }
-        }
-    };
     const handleInput = () => {
+        // 입력값을 hiddenInput에서만 가져오고 필터링
         userInput = hiddenInput.value.trim().replace(/[^0-9]/g, "");
+        if (userInput.length > 4) userInput = userInput.slice(0, 4); // 4자리 제한
         hiddenInput.value = userInput;
         updateText();
+        console.log("Current input:", userInput); // 디버깅용
         if (userInput.length === 4) {
             checkPassword();
         }
@@ -96,19 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 이벤트 리스너 등록
     document.addEventListener("click", handleClick);
-    document.addEventListener("keydown", handleKeydown);
     hiddenInput.addEventListener("input", handleInput);
 
     // 패스워드 검증 함수
     function checkPassword() {
         userInput = userInput.trim();
+        console.log("Checking password:", userInput); // 디버깅용
         if (userInput === "0705") {
-            // 모든 타이머와 이벤트 정리
             clearInterval(traceInterval);
             document.removeEventListener("click", handleClick);
-            document.removeEventListener("keydown", handleKeydown);
             hiddenInput.removeEventListener("input", handleInput);
-            // 인증 상태 저장
             sessionStorage.setItem("access_to_proteur", "true");
             console.log("Password correct, redirecting to /proteur.html");
             window.location.href = "/proteur.html";
