@@ -71,6 +71,6 @@
   padding: 20px 20px 40px;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 600px) {
   .profile__card { flex-direction: column; text-align: center; }
 }

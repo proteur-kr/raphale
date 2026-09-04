@@ -29,12 +29,6 @@
   font-weight: 700;
 }
 
-.site-header__brand img {
-  width: 84px;
-  height: 84px;
-  object-fit: contain;
-}
-
 .site-header__nav a {
   font-size: 14px;
   color: var(--ink-soft);
