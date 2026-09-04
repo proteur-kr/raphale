@@ -81,8 +81,13 @@
 }
 
 @media (max-width: 420px) {
-  .family { gap: 14px 10px; }
-  .family__member { width: 84px; }
+  .family {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 18px 4px;
+  }
+  .family__member { width: 100%; max-width: 120px; }
   .family__member:nth-child(2n),
   .family__member:nth-child(3) { transform: none; }
   .family__avatar-wrap { width: 68px; height: 68px; }
