@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>보안 페이지</title>
-    <link rel="stylesheet" href="assets/css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Proteur Family</title>
+  <meta name="description" content="강씨네 가족 기록 공간, Proteur Family.">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/common.css">
+  <link rel="stylesheet" href="/assets/css/home.css">
 </head>
 <body>
-    <!-- 프로테우르 로고 -->
-    <img class="logo" src="assets/images/proteur_logo_face2.png" alt="Proteur Logo">
 
-    <!-- 비밀번호 입력란 -->
-    <div class="input-wrapper">
-        <input type="password" id="password" placeholder="Password">
-        <div id="result"></div>
+  <header class="site-header">
+    <a class="site-header__brand" href="/">
+      <img src="/assets/images/proteur_logo_face2.png" alt="">
+      Proteur Family
+    </a>
+    <nav class="site-header__nav">
+      <a href="/timeline.html">타임라인</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <img class="hero__art" src="/assets/images/RE640X480Proteur_family_2.png" alt="Proteur 가족 그림">
+    <h1 class="hero__tagline">우리 가족의 기록 공간</h1>
+    <p class="hero__sub">사진과 일기로 하루하루를 남겨두는 곳이에요.</p>
+  </section>
+
+  <section class="family" id="family" aria-label="가족 구성원">
+    <!-- JS(home.js)가 data/members.json을 읽어서 채워줍니다 -->
+  </section>
+
+  <section class="recent">
+    <div class="container recent__header">
+      <h2>최근 기록</h2>
+      <a class="recent__more" href="/timeline.html">전체 타임라인 보기</a>
     </div>
+    <div class="container" id="recent-posts">
+      <!-- JS(home.js)가 채워줍니다 -->
+    </div>
+  </section>
 
-    <!-- 비밀번호 틀렸을 때 표시할 텍스트 -->
-    <div class="proteur-text" id="proteurText">Proteur</div>
+  <p class="about-strip">
+    Proteur. "Professional"과 "Amateur"를 합친 말로, 전문가만큼의 지식을 가지고
+    소비자에 머물지 않고 직접 자신의 의견과 기록을 남기는 사람을 뜻해요.
+  </p>
 
-    <!-- 외부 JS 연결 -->
-    <script src="assets/js/index.js"></script>
+  <footer class="site-footer">© Proteur Family</footer>
+
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/home.js"></script>
 </body>
 </html>

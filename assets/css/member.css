@@ -1,0 +1,76 @@
+/* ==========================================================
+   member.css - 구성원 개별 페이지 전용 스타일
+   ========================================================== */
+
+.profile {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 12px 20px 4px;
+}
+
+.profile__card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: var(--paper-warm);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.profile__avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.profile__avatar img { width: 68%; }
+
+.profile__name {
+  font-size: 24px;
+  margin-bottom: 2px;
+}
+
+.profile__role {
+  font-size: 13px;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.profile__intro {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.profile__likes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 20px;
+  margin: 14px auto 0;
+  max-width: var(--content-width);
+}
+
+.like-tag {
+  font-size: 12px;
+  background: var(--red-soft);
+  color: var(--red);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.profile__feed {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 20px 20px 40px;
+}
+
+@media (max-width: 420px) {
+  .profile__card { flex-direction: column; text-align: center; }
+}

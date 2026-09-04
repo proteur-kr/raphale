@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>타임라인 - Proteur Family</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/common.css">
+  <link rel="stylesheet" href="/assets/css/timeline.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="site-header__brand" href="/">
+      <img src="/assets/images/proteur_logo_face2.png" alt="">
+      Proteur Family
+    </a>
+    <nav class="site-header__nav">
+      <a href="/timeline.html" aria-current="page">타임라인</a>
+    </nav>
+  </header>
+
+  <div class="page-title">
+    <h1>가족 타임라인</h1>
+    <p>모든 구성원의 기록을 시간순으로 모아봤어요.</p>
+  </div>
+
+  <div class="container">
+    <div class="filters" id="member-filter" aria-label="구성원 필터"></div>
+    <div class="filters" id="type-filter" aria-label="유형 필터">
+      <button class="filter-pill" data-type="all" aria-pressed="true">전체</button>
+      <button class="filter-pill" data-type="photo" aria-pressed="false">사진</button>
+      <button class="filter-pill" data-type="diary" aria-pressed="false">일기</button>
+    </div>
+  </div>
+
+  <div class="timeline-list" id="timeline-list">
+    <!-- JS(timeline.js)가 채워줍니다 -->
+  </div>
+
+  <footer class="site-footer">© Proteur Family</footer>
+
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/timeline.js"></script>
+</body>
+</html>

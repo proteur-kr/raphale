@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Proteur Family</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/common.css">
+  <link rel="stylesheet" href="/assets/css/member.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="site-header__brand" href="/">
+      <img src="/assets/images/proteur_logo_face2.png" alt="">
+      Proteur Family
+    </a>
+    <nav class="site-header__nav">
+      <a href="/timeline.html">타임라인</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <a class="go-back" href="/">← 가족 허브로</a>
+  </div>
+
+  <div class="profile">
+    <div class="profile__card" id="profile-card">
+      <!-- JS(member.js)가 채워줍니다 -->
+    </div>
+  </div>
+  <div class="profile__likes" id="profile-likes"></div>
+
+  <div class="profile__feed">
+    <div class="filters" id="type-filter" aria-label="유형 필터">
+      <button class="filter-pill" data-type="all" aria-pressed="true">전체</button>
+      <button class="filter-pill" data-type="photo" aria-pressed="false">사진</button>
+      <button class="filter-pill" data-type="diary" aria-pressed="false">일기</button>
+    </div>
+    <div id="feed">
+      <!-- JS(member.js)가 채워줍니다 -->
+    </div>
+  </div>
+
+  <footer class="site-footer">© Proteur Family</footer>
+
+  <script src="/assets/js/common.js"></script>
+  <script src="/assets/js/member.js"></script>
+</body>
+</html>

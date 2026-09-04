@@ -1,0 +1,48 @@
+/* ==========================================================
+   timeline.css - 전체 가족 통합 타임라인 페이지 전용 스타일
+   시간순 기록이라는 내용 자체가 순서가 있는 정보이기 때문에,
+   세로선 + 점으로 "타임라인"임을 시각적으로 보여줍니다.
+   ========================================================== */
+
+.page-title {
+  padding: 8px 20px 4px;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.page-title h1 { font-size: 26px; }
+.page-title p { color: var(--ink-soft); font-size: 14px; }
+
+.timeline-list {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 8px 20px 40px 32px;
+  position: relative;
+}
+
+.timeline-list::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 8px;
+  bottom: 40px;
+  width: 2px;
+  background: var(--line);
+}
+
+.timeline-entry {
+  position: relative;
+}
+
+.timeline-entry::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 2px var(--line);
+}
