@@ -51,8 +51,40 @@
         <button id="logout-btn" class="btn-secondary">로그아웃</button>
       </div>
 
+      <form id="member-form">
+        <h2>구성원 소개 수정</h2>
+
+        <div class="field">
+          <label for="m-member">구성원</label>
+          <select id="m-member"></select>
+        </div>
+
+        <div class="field">
+          <label for="m-name">이름</label>
+          <input type="text" id="m-name">
+        </div>
+
+        <div class="field">
+          <label for="m-role">역할</label>
+          <input type="text" id="m-role" placeholder="예: 아빠, 엄마">
+        </div>
+
+        <div class="field">
+          <label for="m-intro">소개</label>
+          <textarea id="m-intro" placeholder="한 줄 소개"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="m-likes">좋아하는 것 (쉼표로 구분)</label>
+          <input type="text" id="m-likes" placeholder="예: 축구, 라면, 강아지">
+        </div>
+
+        <button type="submit" id="member-submit-btn" class="btn-primary">프로필 저장</button>
+        <p id="member-status" class="form-status"></p>
+      </form>
+
       <form id="post-form">
-        <h2>새 기록 추가</h2>
+        <h2 id="post-form-title">새 기록 추가</h2>
 
         <div class="field">
           <label for="f-member">구성원</label>
@@ -82,13 +114,19 @@
           <textarea id="f-content" placeholder="오늘 있었던 일을 적어주세요"></textarea>
         </div>
 
+        <div class="field" id="existing-images-field" hidden>
+          <label>기존 사진 (×를 누르면 삭제 표시돼요)</label>
+          <div id="existing-images"></div>
+        </div>
+
         <div class="field">
-          <label for="f-images">사진 (선택, 여러 장 가능)</label>
+          <label for="f-images">사진 추가 (선택, 여러 장 가능)</label>
           <input type="file" id="f-images" accept="image/*" multiple>
           <div id="image-preview"></div>
         </div>
 
         <button type="submit" id="submit-btn" class="btn-primary">저장</button>
+        <button type="button" id="cancel-edit-btn" class="btn-secondary" hidden>수정 취소</button>
         <p id="form-status" class="form-status"></p>
       </form>
 

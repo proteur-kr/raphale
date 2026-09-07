@@ -1,4 +1,4 @@
-/* admin.js - 홈페이지 안에서 사진/글을 올리고 지우는 관리자 페이지.
+/* admin.js - 홈페이지 안에서 사진/글을 올리고 지우고 수정하는 관리자 페이지.
    서버가 없는 정적 사이트라, "저장"을 누르면 브라우저가 GitHub API를
    직접 호출해서 커밋까지 해줍니다. 그래서 GitHub 개인 액세스 토큰이
    필요해요 (최초 1회만 입력하면 이 브라우저에 저장돼요). */
@@ -97,7 +97,10 @@ const setupError = document.getElementById("setup-error");
 
 let members = [];
 let posts = [];
-let postsSha = null;
+
+// 기록 수정 모드일 때 채워지는 상태
+let editingPostId = null;
+let editingKeptImages = []; // 기존 사진 중 유지할 것들 (경로 배열)
 
 async function checkTokenAndLoad() {
   if (!getToken()) {
@@ -112,13 +115,13 @@ async function checkTokenAndLoad() {
     ]);
     members = membersRes.json;
     posts = postsRes.json;
-    postsSha = postsRes.sha;
 
-    document.getElementById("f-member").innerHTML = members
-      .map((m) => `<option value="${m.id}">${m.name}</option>`)
-      .join("");
+    const memberOptions = members.map((m) => `<option value="${m.id}">${m.name}</option>`).join("");
+    document.getElementById("f-member").innerHTML = memberOptions;
+    document.getElementById("m-member").innerHTML = memberOptions;
     document.getElementById("f-date").value = new Date().toISOString().slice(0, 10);
 
+    fillMemberProfileForm();
     renderPostsList();
     setupScreen.hidden = true;
     adminScreen.hidden = false;
@@ -143,6 +146,72 @@ document.getElementById("logout-btn").addEventListener("click", () => {
   checkTokenAndLoad();
 });
 
+// ---------- 구성원 소개 수정 ----------
+function fillMemberProfileForm() {
+  const id = document.getElementById("m-member").value;
+  const m = members.find((mm) => mm.id === id);
+  if (!m) return;
+  document.getElementById("m-name").value = m.name || "";
+  document.getElementById("m-role").value = m.role || "";
+  document.getElementById("m-intro").value = m.intro || "";
+  document.getElementById("m-likes").value = (m.likes || []).join(", ");
+}
+
+document.getElementById("m-member").addEventListener("change", fillMemberProfileForm);
+
+document.getElementById("member-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById("member-submit-btn");
+  const statusEl = document.getElementById("member-status");
+  const id = document.getElementById("m-member").value;
+
+  const name = document.getElementById("m-name").value.trim();
+  const role = document.getElementById("m-role").value.trim();
+  const intro = document.getElementById("m-intro").value.trim();
+  const likes = document.getElementById("m-likes").value
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  if (!name) {
+    statusEl.textContent = "이름은 비워둘 수 없어요.";
+    return;
+  }
+
+  btn.disabled = true;
+  statusEl.textContent = "저장 중...";
+  try {
+    const fresh = await getJsonFile("data/members.json");
+    const updated = fresh.json.map((m) =>
+      m.id === id ? { ...m, name, role, intro, likes } : m
+    );
+
+    await putFile(
+      "data/members.json",
+      utf8ToBase64(JSON.stringify(updated, null, 2)),
+      fresh.sha,
+      `구성원 프로필 수정: ${name}`
+    );
+
+    members = updated;
+    // 기록 폼의 구성원 이름 표시도 갱신
+    const memberOptions = members.map((m) => `<option value="${m.id}">${m.name}</option>`).join("");
+    const prevF = document.getElementById("f-member").value;
+    const prevM = document.getElementById("m-member").value;
+    document.getElementById("f-member").innerHTML = memberOptions;
+    document.getElementById("m-member").innerHTML = memberOptions;
+    document.getElementById("f-member").value = prevF;
+    document.getElementById("m-member").value = prevM;
+
+    renderPostsList();
+    statusEl.textContent = "저장했어요! 1~2분 뒤 사이트에 반영돼요.";
+  } catch (err) {
+    statusEl.textContent = "저장 실패: " + err.message;
+  } finally {
+    btn.disabled = false;
+  }
+});
+
 // ---------- 기존 기록 목록 ----------
 function renderPostsList() {
   const byId = {};
@@ -165,7 +234,10 @@ function renderPostsList() {
             <span class="admin-post-date">${p.date} · ${p.type === "photo" ? "사진" : "일기"}</span>
             <div>${p.title}</div>
           </div>
-          <button class="delete-btn" data-id="${p.id}">삭제</button>
+          <div class="admin-post-actions">
+            <button class="edit-btn" data-id="${p.id}">수정</button>
+            <button class="delete-btn" data-id="${p.id}">삭제</button>
+          </div>
         </div>
       `;
     })
@@ -173,6 +245,9 @@ function renderPostsList() {
 
   listEl.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => handleDelete(btn.dataset.id));
+  });
+  listEl.querySelectorAll(".edit-btn").forEach((btn) => {
+    btn.addEventListener("click", () => handleEditStart(btn.dataset.id));
   });
 }
 
@@ -185,7 +260,6 @@ async function handleDelete(id) {
   statusEl.textContent = "삭제 중...";
 
   try {
-    // 최신 sha로 다시 받아온 뒤 삭제 (동시 수정 충돌 방지)
     const fresh = await getJsonFile("data/posts.json");
     const updated = fresh.json.filter((p) => p.id !== id);
 
@@ -196,12 +270,12 @@ async function handleDelete(id) {
       `기록 삭제: ${target.title}`
     );
 
-    // 딸린 이미지 파일도 정리 (실패해도 무시하고 진행)
     for (const img of target.images || []) {
       await deleteFile(stripLeadingSlash(img), `이미지 삭제: ${img}`);
     }
 
     posts = updated;
+    if (editingPostId === id) exitEditMode();
     renderPostsList();
     statusEl.textContent = "삭제했어요.";
   } catch (e) {
@@ -209,7 +283,77 @@ async function handleDelete(id) {
   }
 }
 
-// ---------- 새 기록 추가 ----------
+// ---------- 기록 수정 모드 ----------
+function renderExistingImages() {
+  const field = document.getElementById("existing-images-field");
+  const wrap = document.getElementById("existing-images");
+
+  if (!editingPostId || editingKeptImages.length === 0) {
+    field.hidden = true;
+    wrap.innerHTML = "";
+    return;
+  }
+
+  field.hidden = false;
+  wrap.innerHTML = editingKeptImages
+    .map(
+      (src, i) => `
+      <div class="existing-image-tile" data-index="${i}">
+        <img src="${src}" alt="">
+        <button type="button" data-index="${i}" title="이 사진 빼기">×</button>
+      </div>
+    `
+    )
+    .join("");
+
+  wrap.querySelectorAll("button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      editingKeptImages.splice(Number(btn.dataset.index), 1);
+      renderExistingImages();
+    });
+  });
+}
+
+function handleEditStart(id) {
+  const post = posts.find((p) => p.id === id);
+  if (!post) return;
+
+  editingPostId = id;
+  editingKeptImages = [...(post.images || [])];
+
+  document.getElementById("f-member").value = post.memberId;
+  document.getElementById("f-type").value = post.type;
+  document.getElementById("f-date").value = post.date;
+  document.getElementById("f-title").value = post.title;
+  document.getElementById("f-content").value = post.content;
+  imageInput.value = "";
+  document.getElementById("image-preview").innerHTML = "";
+  renderExistingImages();
+
+  document.getElementById("post-form-title").textContent = "기록 수정";
+  document.getElementById("submit-btn").textContent = "수정 저장";
+  document.getElementById("cancel-edit-btn").hidden = false;
+  document.getElementById("form-status").textContent = "";
+
+  document.getElementById("post-form").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function exitEditMode() {
+  editingPostId = null;
+  editingKeptImages = [];
+  document.getElementById("post-form").reset();
+  document.getElementById("f-date").value = new Date().toISOString().slice(0, 10);
+  document.getElementById("image-preview").innerHTML = "";
+  renderExistingImages();
+
+  document.getElementById("post-form-title").textContent = "새 기록 추가";
+  document.getElementById("submit-btn").textContent = "저장";
+  document.getElementById("cancel-edit-btn").hidden = true;
+}
+
+document.getElementById("cancel-edit-btn").addEventListener("click", exitEditMode);
+
+// ---------- 새 기록 추가 / 수정 저장 ----------
 const imageInput = document.getElementById("f-images");
 imageInput.addEventListener("change", () => {
   const preview = document.getElementById("image-preview");
@@ -244,8 +388,8 @@ document.getElementById("post-form").addEventListener("submit", async (e) => {
 
   submitBtn.disabled = true;
   try {
-    // 1) 사진이 있으면 먼저 하나씩 업로드
-    const imagePaths = [];
+    // 1) 새로 고른 사진이 있으면 먼저 하나씩 업로드
+    const newImagePaths = [];
     for (let i = 0; i < files.length; i++) {
       statusEl.textContent = `사진 업로드 중... (${i + 1}/${files.length})`;
       const file = files[i];
@@ -254,36 +398,66 @@ document.getElementById("post-form").addEventListener("submit", async (e) => {
       const path = `assets/images/posts/${filename}`;
       const base64 = await fileToBase64(file);
       await putFile(path, base64, null, `사진 추가: ${filename}`);
-      imagePaths.push(`/${path}`);
+      newImagePaths.push(`/${path}`);
     }
 
-    // 2) posts.json에 새 항목 추가 (최신 sha로 다시 받아서 충돌 방지)
     statusEl.textContent = "기록 저장 중...";
     const fresh = await getJsonFile("data/posts.json");
-    const newPost = {
-      id: `post-${Date.now()}`,
-      memberId,
-      date,
-      type,
-      title,
-      content,
-      images: imagePaths,
-    };
-    const updated = [newPost, ...fresh.json];
 
-    await putFile(
-      "data/posts.json",
-      utf8ToBase64(JSON.stringify(updated, null, 2)),
-      fresh.sha,
-      `새 기록: ${title}`
-    );
+    if (editingPostId) {
+      // ---- 기존 기록 수정 ----
+      const finalImages = [...editingKeptImages, ...newImagePaths];
+      const original = fresh.json.find((p) => p.id === editingPostId);
+      const updated = fresh.json.map((p) =>
+        p.id === editingPostId
+          ? { ...p, memberId, type, date, title, content, images: finalImages }
+          : p
+      );
 
-    posts = updated;
-    renderPostsList();
-    statusEl.textContent = "저장했어요! 1~2분 뒤 사이트에 반영돼요.";
-    document.getElementById("post-form").reset();
-    document.getElementById("f-date").value = new Date().toISOString().slice(0, 10);
-    document.getElementById("image-preview").innerHTML = "";
+      await putFile(
+        "data/posts.json",
+        utf8ToBase64(JSON.stringify(updated, null, 2)),
+        fresh.sha,
+        `기록 수정: ${title}`
+      );
+
+      // 사용자가 뺀 기존 사진 파일은 정리 (실패해도 무시)
+      const removed = (original.images || []).filter((img) => !finalImages.includes(img));
+      for (const img of removed) {
+        await deleteFile(stripLeadingSlash(img), `이미지 삭제: ${img}`);
+      }
+
+      posts = updated;
+      renderPostsList();
+      statusEl.textContent = "수정했어요! 1~2분 뒤 사이트에 반영돼요.";
+      exitEditMode();
+    } else {
+      // ---- 새 기록 추가 ----
+      const newPost = {
+        id: `post-${Date.now()}`,
+        memberId,
+        date,
+        type,
+        title,
+        content,
+        images: newImagePaths,
+      };
+      const updated = [newPost, ...fresh.json];
+
+      await putFile(
+        "data/posts.json",
+        utf8ToBase64(JSON.stringify(updated, null, 2)),
+        fresh.sha,
+        `새 기록: ${title}`
+      );
+
+      posts = updated;
+      renderPostsList();
+      statusEl.textContent = "저장했어요! 1~2분 뒤 사이트에 반영돼요.";
+      document.getElementById("post-form").reset();
+      document.getElementById("f-date").value = new Date().toISOString().slice(0, 10);
+      document.getElementById("image-preview").innerHTML = "";
+    }
   } catch (e) {
     statusEl.textContent = "저장 실패: " + e.message;
   } finally {
