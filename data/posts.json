@@ -1,5 +1,16 @@
 [
   {
+    "id": "post-1788755290702",
+    "memberId": "member3",
+    "date": "2008-02-15",
+    "type": "photo",
+    "title": "현빈이 태어나던 날",
+    "content": "강현빈 등장",
+    "images": [
+      "/assets/images/posts/1788755286665-0.jpg"
+    ]
+  },
+  {
     "id": "sample-1",
     "memberId": "member1",
     "date": "2026-08-03",
@@ -15,7 +26,9 @@
     "type": "photo",
     "title": "샘플 사진 기록",
     "content": "사진은 images 배열에 파일 경로를 추가하면 이렇게 표시돼요.",
-    "images": ["/assets/images/posts/sample-placeholder.jpg"]
+    "images": [
+      "/assets/images/posts/sample-placeholder.jpg"
+    ]
   },
   {
     "id": "sample-3",
@@ -33,7 +46,10 @@
     "type": "photo",
     "title": "샘플 사진 기록 2",
     "content": "images 배열에 여러 장을 넣으면 한 게시물에 여러 사진을 붙일 수 있어요.",
-    "images": ["/assets/images/posts/sample-placeholder.jpg", "/assets/images/posts/sample-placeholder.jpg"]
+    "images": [
+      "/assets/images/posts/sample-placeholder.jpg",
+      "/assets/images/posts/sample-placeholder.jpg"
+    ]
   },
   {
     "id": "sample-5",
