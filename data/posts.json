@@ -39,14 +39,5 @@
       "/assets/images/posts/sample-placeholder.jpg",
       "/assets/images/posts/sample-placeholder.jpg"
     ]
-  },
-  {
-    "id": "sample-5",
-    "memberId": "member4",
-    "date": "2026-09-01",
-    "type": "diary",
-    "title": "샘플 일기 3",
-    "content": "날짜(date)는 반드시 YYYY-MM-DD 형식으로 적어주세요. 최신 날짜가 위로 정렬돼요.",
-    "images": []
   }
 ]
