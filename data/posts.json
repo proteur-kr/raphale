@@ -40,18 +40,6 @@
     "images": []
   },
   {
-    "id": "sample-4",
-    "memberId": "member3",
-    "date": "2026-08-25",
-    "type": "photo",
-    "title": "샘플 사진 기록 2",
-    "content": "images 배열에 여러 장을 넣으면 한 게시물에 여러 사진을 붙일 수 있어요.",
-    "images": [
-      "/assets/images/posts/sample-placeholder.jpg",
-      "/assets/images/posts/sample-placeholder.jpg"
-    ]
-  },
-  {
     "id": "sample-5",
     "memberId": "member4",
     "date": "2026-09-01",
