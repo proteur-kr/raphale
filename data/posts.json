@@ -15,7 +15,9 @@
     "type": "photo",
     "title": "샘플 사진 기록",
     "content": "사진은 images 배열에 파일 경로를 추가하면 이렇게 표시돼요.",
-    "images": ["/assets/images/posts/sample-placeholder.jpg"]
+    "images": [
+      "/assets/images/posts/sample-placeholder.jpg"
+    ]
   },
   {
     "id": "sample-3",
@@ -33,7 +35,10 @@
     "type": "photo",
     "title": "샘플 사진 기록 2",
     "content": "images 배열에 여러 장을 넣으면 한 게시물에 여러 사진을 붙일 수 있어요.",
-    "images": ["/assets/images/posts/sample-placeholder.jpg", "/assets/images/posts/sample-placeholder.jpg"]
+    "images": [
+      "/assets/images/posts/sample-placeholder.jpg",
+      "/assets/images/posts/sample-placeholder.jpg"
+    ]
   },
   {
     "id": "sample-5",
@@ -42,15 +47,6 @@
     "type": "diary",
     "title": "샘플 일기 3",
     "content": "날짜(date)는 반드시 YYYY-MM-DD 형식으로 적어주세요. 최신 날짜가 위로 정렬돼요.",
-    "images": []
-  },
-  {
-    "id": "sample-6",
-    "memberId": "member2",
-    "date": "2026-09-03",
-    "type": "photo",
-    "title": "샘플 사진 기록 3",
-    "content": "이 6개의 샘플 항목은 실제 기록을 추가하기 전에 지워도 됩니다.",
     "images": []
   }
 ]
