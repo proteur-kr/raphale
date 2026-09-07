@@ -1,5 +1,16 @@
 [
   {
+    "id": "post-1788756073266",
+    "memberId": "member3",
+    "date": "2008-02-15",
+    "type": "photo",
+    "title": "강현빈 080215",
+    "content": "21:29 3.12kg",
+    "images": [
+      "/assets/images/posts/1788756069490-0.jpg"
+    ]
+  },
+  {
     "id": "post-1788755290702",
     "memberId": "member3",
     "date": "2008-02-15",
