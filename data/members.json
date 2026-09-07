@@ -31,13 +31,9 @@
     "id": "member3",
     "name": "강현빈",
     "avatar": "/assets/images/button3.png",
-    "role": "역할을 적어주세요",
-    "intro": "이 사람을 한 줄로 소개해주세요.",
-    "likes": [
-      "좋아하는 것 1",
-      "좋아하는 것 2",
-      "좋아하는 것 3"
-    ]
+    "role": "큰아들",
+    "intro": "큰아들",
+    "likes": []
   },
   {
     "id": "member4",
